@@ -1,0 +1,24 @@
+<?php
+$logoPath = file_exists('../../assets/images/logo.png')
+    ? '../../assets/images/logo.png'
+    : 'assets/images/logo.png';
+?>
+<div class="footer text-center text-white p-2 mt-5">
+    <span>Privacy | Security | Feedback</span>
+    <div class="justify-content-center p-3 d-flex gap-1">
+        <div class="p-2 mt-1">
+            <img width="23px" src="<?= $logoPath ?>">
+        </div>
+        <div class="p-2 mt-1 text-white">
+            AGMA | IlecoIII
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+<script src="assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous"></script>

@@ -1,0 +1,11 @@
+{
+    "name": "ilecoiii/agma",
+    "description": "project for agma",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Ilecoiii\\Agma\\": "src/"
+        }
+    },
+    "require": {}
+}
