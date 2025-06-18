@@ -37,3 +37,6 @@ class Database
         return self::$connection;
     }
 }
+
+
+// $test = (new Database)->connect();
