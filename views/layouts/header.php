@@ -21,11 +21,21 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <!-- fontawesome --->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- JQuery ---->
+    <!-- <link rel="stylesheet" href="assets/css/jquery-ui.css"> -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
 
     <!-- custom css  --->
     <link rel="stylesheet" type="text/css" href="assets/css/login.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../assets/css/layout.css"> -->
     <link rel="stylesheet" type="text/css" href="assets/css/footer.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/nami.css">
+
 </head>
 
 <body style="background-color: #31363F;padding:10px;">

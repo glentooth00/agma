@@ -14,7 +14,7 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'server' => '192.168.4.163',
-            'database' => 'contract_monitoring',
+            'database' => 'membership',
             'username' => '',
             'password' => '',
         ]
