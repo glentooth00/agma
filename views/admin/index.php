@@ -28,7 +28,7 @@ $currentPage = 'Dashboard';
         <?php include_once __DIR__ . '../../components/menu/sidebar.php'; ?>
 
         <div class="content">
-            <h1>Dashboard</h1>
+            <h3>Dashboard</h3>
             <hr style="margin-bottom: 2rem; border-color: #e2e8f0;">
 
             <div class="card-grid">

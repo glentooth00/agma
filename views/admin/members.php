@@ -1,7 +1,13 @@
 <?php
+include_once __DIR__ . '../../../vendor/autoload.php';
+use App\Controllers\MembersController;
 $pagetitle = 'Dashboard';
 include_once __DIR__ . '../../layouts/header.php';
 $currentPage = 'Members';
+
+$members = (new MembersController)->getAllMembers();
+
+
 ?>
 
 
@@ -28,8 +34,42 @@ $currentPage = 'Members';
         <?php include_once __DIR__ . '../../components/menu/sidebar.php'; ?>
 
         <div class="content">
-            <h1>Dashboard</h1>
+            <h3>Members</h3>
             <hr style="margin-bottom: 2rem; border-color: #e2e8f0;">
+
+            <table id="table" class="table table-bordered table-striped display mt-2 hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border: 1px solid #A9A9A9;">Member name</span></th>
+                        <th scope="col" style="text-align: center; border: 1px solid #A9A9A9;">Membership type</th>
+                        <th scope="col" style="text-align: center; border: 1px solid #A9A9A9;">Member OR #</th>
+                        <!--<th scope="col" style="text-align: center; border: 1px solid #A9A9A9;">End</th>
+                        <th scope="col" style="text-align: center; border: 1px solid #A9A9A9;">Status</th>
+                        <th scope="col" style="text-align: center; border: 1px solid #A9A9A9;">Action</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($members)): ?>
+                        <?php foreach ($members as $contract): ?>
+                            <tr>
+                                <td>
+                                    <?= htmlspecialchars($contract['member_name'] ?? '') ?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($contract['membership_type'] ?? '') ?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($contract['member_or'] ?? '') ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" class="text-center">No contracts found.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
 
             <!-- <div class="card-grid">
                 <div class="card cardDash">
