@@ -31,3 +31,6 @@ $logoPath = file_exists('../../assets/images/logo.png')
 
 <!-- Include DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!----- custom js ------->
+<script src="../../assets/js/member.js"></script>
