@@ -18,8 +18,6 @@ class Members
         $this->db = Database::connect();
     }
 
-
-
     public function getByUsername($data)
     {
         $username = $data['username'];
@@ -48,6 +46,14 @@ class Members
         $results = $stmt->fetchAll();
         return $results;
 
+    }
+
+    public function countAll()
+    {
+        $sql = "SELECT COUNT(*) FROM " . $this->table;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
 

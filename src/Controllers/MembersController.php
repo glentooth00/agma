@@ -11,4 +11,11 @@ class MembersController
 
         return $members;
     }
+
+    public function countAllMembers()
+    {
+        $count = new Members();
+
+        return $count->countAll();
+    }
 }
