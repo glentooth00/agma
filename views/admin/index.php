@@ -1,4 +1,7 @@
 <?php
+use App\Controllers\MembersController;
+use App\Models\Members;
+include_once __DIR__ . '../../../vendor/autoload.php';
 $pagetitle = 'Dashboard';
 include_once __DIR__ . '../../layouts/header.php';
 $currentPage = 'Dashboard';
@@ -28,14 +31,17 @@ $currentPage = 'Dashboard';
         <?php include_once __DIR__ . '../../components/menu/sidebar.php'; ?>
 
         <div class="content">
-            <h1>Dashboard</h1>
+            <h3>Dashboard</h3>
             <hr style="margin-bottom: 2rem; border-color: #e2e8f0;">
 
             <div class="card-grid">
                 <a href="members.php">
                     <div class="card cardDash">
+                        <?php
+                        $totalMembers = (new MembersController)->countAllMembers();
+                        ?>
                         <h5>Total Members</h5>
-                        <p>12</p>
+                        <h1 style="text-align:center;"><?= $totalMembers ?></h1>
                     </div>
                 </a>
                 <div class="card cardDash">

@@ -28,6 +28,11 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
+    <!--DATA TABLES INITIALIZE --->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+    <!------lottie loadfile  cdn-------->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <!-- custom css  --->
     <link rel="stylesheet" type="text/css" href="assets/css/login.css">
