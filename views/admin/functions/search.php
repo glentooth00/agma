@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                 <td>
                     <div style="display: flex; gap: 5px; justify-content: center;">
                         <button
+                            id="ViewBtn"
                             class="btn btn-sm btn-primary"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasExample"
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                         >
                             View
                         </button>
-                        <button class="btn btn-sm btn-danger" data-id="' . $id . '" onclick="deletePopup(this)">Delete</button>
+                        <button id="deleteBtn" class="btn btn-sm btn-danger" data-id="' . $id . '" onclick="deletePopup(this)">Delete</button>
                     </div>
                 </td>
             </tr>';
