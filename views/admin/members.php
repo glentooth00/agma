@@ -10,33 +10,53 @@ $members = (new MembersController)->getAllMembers();
 
 $userid = $_SESSION['data']['id'];
 ?>
-<div class="card" id="deletePopup" style="display: none;
-    position: absolute;
-    z-index: 10;
-    margin: 15em 50em 5em 45em;">
+<div class="card" id="deletePopup" style="
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    width: 90%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background-color: #fff;
+    border-radius: 8px;
+">
 
     <div>
-        <h2 id="deleteTitle">Confirm Delete?</h2>
+        <h2 id="deleteTitle" style="font-size: 1.5rem; margin-bottom: 10px;">Confirm Delete?</h2>
         <hr>
-        <div>
-            <p style="text-align:left;font-size:18px;">
-                You are about to delete a consumer's data. Are you sure you want
-                to continue?
-            </p>
-        </div>
-        <div class="d-flex" style="padding: 10px;margin: 5px 55px 5px 30px;">
-            <div style="padding:10px;">
-                <button onclick="cancelDelete()" id="cancel">Cancel</button>
-            </div>
-            <div style="padding:10px;">
-                <form method="post" action="functions/delete.php">
-                    <input type="hidden" name="id" id="deleteIdValue">
-                    <button type="submit" id="delete">Yes, Delete!</button>
-                </form>
-            </div>
-        </div>
+        <p style="text-align: left; font-size: 16px;">
+            You are about to delete a consumer's data. Are you sure you want to continue?
+        </p>
+    </div>
+
+    <div class="d-flex" style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button onclick="cancelDelete()" id="cancel" style="
+            padding: 8px 16px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        ">Cancel</button>
+
+        <form id="deleteForm">
+            <input type="hidden" name="id" id="deleteIdValue">
+            <button type="submit" id="delete" style="
+                padding: 8px 16px;
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            ">Yes, Delete!</button>
+        </form>
     </div>
 </div>
+
 
 
 <div id="loaderOverlay">
@@ -82,9 +102,6 @@ $userid = $_SESSION['data']['id'];
                                             <div>
                                                 <button data-id="<?= $member['id'] ?>" id="deletebtn"
                                                     onclick="deletePopup(this)">Delete</button>
-
-
-
                                             </div>
                                         </div>
 
@@ -104,6 +121,56 @@ $userid = $_SESSION['data']['id'];
 
 </div>
 
+
+<!-- popup notification ---->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+</svg>
+
+
+<?php if (isset($_SESSION['notification'])): ?>
+    <div id="notification"
+        class="alert <?php echo ($_SESSION['notification']['type'] == 'success') ? 'alert-success border-success' : ($_SESSION['notification']['type'] == 'warning' ? 'alert-warning border-warning' : 'alert-danger border-danger'); ?> d-flex align-items-center float-end alert-dismissible fade show"
+        role="alert" style="position: fixed; bottom: 1.5em; right: 1em; z-index: 1000;">
+        <!-- Icon -->
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+            aria-label="<?php echo ($_SESSION['notification']['type'] == 'success') ? 'Success' : ($_SESSION['notification']['type'] == 'warning' ? 'Warning' : 'Error'); ?>:">
+            <use
+                xlink:href="<?php echo ($_SESSION['notification']['type'] == 'success') ? '#check-circle-fill' : ($_SESSION['notification']['type'] == 'warning' ? '#exclamation-triangle-fill' : '#exclamation-circle-fill'); ?>" />
+        </svg>
+        <!-- Message -->
+        <div>
+            <?php echo $_SESSION['notification']['message']; ?>
+        </div>
+        <!-- Close Button -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['notification']); // Clear notification after displaying ?>
+
+    <script>
+        // Automatically fade the notification out after 6 seconds
+        setTimeout(function () {
+            let notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.remove('show');
+                notification.classList.add('fade');
+                notification.style.transition = 'opacity 1s ease';
+            }
+        }, 7000); // 6 seconds
+    </script>
+<?php endif; ?>
 
 
 <?php include_once '../layouts/footer.php'; ?>
@@ -230,3 +297,30 @@ $userid = $_SESSION['data']['id'];
 
 <!-- ✅ Scripts -->
 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<script>
+    function cancelDelete() {
+        document.getElementById('deletePopup').style.display = 'none';
+    }
+
+    // Handle AJAX form submission
+    $(document).ready(function () {
+        $('#deleteForm').on('submit', function (e) {
+            e.preventDefault();
+            const id = $('#deleteIdValue').val();
+
+            $.ajax({
+                url: 'functions/delete.php',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    $('#deletePopup').hide();
+                    location.reload(); // or remove the item from DOM
+                },
+                error: function () {
+                    alert('Failed to delete.');
+                }
+            });
+        });
+    });
+
+</script>

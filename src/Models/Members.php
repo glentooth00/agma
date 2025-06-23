@@ -56,5 +56,46 @@ class Members
         return $stmt->fetchColumn();
     }
 
+    public function delete($id)
+    {
+        $this->stmt = $this->db->prepare("DELETE FROM " . $this->table . " WHERE id = ?");
+        $this->stmt->execute([$id]);
+    }
+
+    public function getMember($data)
+    {
+
+        $sql = "SELECT * FROM " . $this->table . "WHERE account_no = :account_no ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':account_no', $data['account_no']);
+        $stmt->execute();
+
+        return $result = $stmt->fetchAll();
+
+    }
+
+    public function searchMember($search)
+    {
+        try {
+            $sql = "SELECT * FROM {$this->table}
+                WHERE account_no LIKE :account_no
+                   OR member_name LIKE :member_name";
+
+            $stmt = $this->db->prepare($sql);
+
+            $likeTerm = '%' . $search . '%';
+
+            $stmt->bindValue(':account_no', $likeTerm, PDO::PARAM_STR);
+            $stmt->bindValue(':member_name', $likeTerm, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            die("Database error: " . $e->getMessage());
+        }
+    }
+
+
 
 }
