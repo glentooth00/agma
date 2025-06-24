@@ -15,40 +15,71 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-//----------------DAtatables
 $(document).ready(function () {
+    // Initialize original #table if it has rows
     var rowCount = $('#table tbody tr').length;
-
-    // Check if the table has at least one data row (excluding the "No contracts found" message)
     if (rowCount > 0 && $('#table tbody tr td').first().attr('colspan') !== '6') {
-        // Initialize DataTable
         var table = $('#table').DataTable({
-            "paging": true,
-            "searching": true,
-            "lengthChange": true,
-            "pageLength": 10,
-            "ordering": false,
-            "info": true
+            paging: true,
+            searching: true,
+            lengthChange: true,
+            pageLength: 10,
+            ordering: false,
+            info: true
         });
 
-        // Append the contract type filter next to the search input
-        var searchInput = $('#table_filter input'); // DataTables search input field
-        var filterDiv = $('#statusFilter').closest('div'); // The contract filter container
-        searchInput.closest('div').append(filterDiv); // Move the filter next to the search input
+        // Attach status filter if available
+        var searchInput = $('#table_filter input');
+        var filterDiv = $('#statusFilter').closest('div');
+        if (filterDiv.length && searchInput.length) {
+            searchInput.closest('div').append(filterDiv);
 
-        // Apply filter based on contract type selection
-        $('#statusFilter').change(function () {
-            var filterValue = $(this).val();
-            if (filterValue) {
-                table.column(1).search(filterValue).draw(); // Column 1 is for contract type
-            } else {
-                table.column(1).search('').draw(); // Reset filter
-            }
+            $('#statusFilter').on('change', function () {
+                var filterValue = $(this).val();
+                table.column(1).search(filterValue).draw();
+            });
+        }
+    }
+
+    // Initialize #searchTable dynamically after AJAX
+    if ($('#searchTable').length) {
+        if ($.fn.DataTable.isDataTable('#searchTable')) {
+            $('#searchTable').DataTable().destroy();
+        }
+
+        $('#searchTable').DataTable({
+            paging: true,
+            searching: true,
+            lengthChange: true,
+            pageLength: 10,
+            ordering: false,
+            info: true
         });
     }
 });
 
 
 
+
 //----------------DAtatables
 
+$(document).ready(function () {
+    $('.delete-btn').on('click', function () {
+        const memberId = $(this).data('id');
+        console.log(memberId);
+
+        $.ajax({
+            url: 'functions/delete.php', // your PHP script
+            type: 'POST',
+            data: { id: memberId },
+            success: function (response) {
+                // Optional: show success message from server
+                // Then reload the page or remove the deleted row
+                location.reload(); // refresh to reflect deletion
+            },
+            error: function () {
+                alert('Failed to delete the member.');
+            }
+        });
+    });
+});

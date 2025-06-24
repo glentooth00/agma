@@ -30,7 +30,7 @@ $userid = $_SESSION['data']['id'];
             <hr style="margin-bottom: 2rem; border-color: #e2e8f0;">
 
             <div class="card-grid">
-                <a href="members.php">
+                <a href="membership.php">
                     <div class="card cardDash">
                         <?php
                         $totalMembers = (new MembersController)->countAllMembers();
