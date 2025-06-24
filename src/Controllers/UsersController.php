@@ -21,6 +21,11 @@ class UsersController
         (new User)->updateStatus($data);
     }
 
+    public function logoutStatusUpdate($data)
+    {
+        (new User)->updateLogoutStatus($data);
+    }
+
 
 
 }

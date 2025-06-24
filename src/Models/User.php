@@ -39,6 +39,14 @@ class User
         $stmt->execute([$status, $lastLogin, $updatedAt, $id,]);
     }
 
-
+    public function updateLogoutStatus($data)
+    {
+        $id = $data['id'];
+        $status = $data['status'];
+        $lastLogout = $data['last_logout'];
+        $updatedAt = $data['updated_at'];
+        $stmt = $this->db->prepare("UPDATE " . $this->table . " SET status = ?, last_logout = ?, updated_at = ? WHERE id = ?");
+        $stmt->execute([$status, $lastLogout, $updatedAt, $id,]);
+    }
 
 }

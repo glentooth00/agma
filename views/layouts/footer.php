@@ -21,8 +21,8 @@ $logoPath = file_exists('../../assets/images/logo.png')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script src="../../assets/js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
     crossorigin="anonymous"></script>
 
 
@@ -31,3 +31,6 @@ $logoPath = file_exists('../../assets/images/logo.png')
 
 <!-- Include DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!----- custom js ------->
+<script src="../../assets/js/member.js"></script>

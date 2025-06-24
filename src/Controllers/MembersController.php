@@ -18,4 +18,17 @@ class MembersController
 
         return $count->countAll();
     }
+
+    public function deleteMember($id)
+    {
+        $delete = (new Members)->delete($id);
+        return;
+    }
+
+    public function searchMember($search)
+    {
+        $model = new Members();
+        return $model->searchMember($search);
+    }
+
 }
