@@ -354,5 +354,12 @@ function closeDiv() {
         #accountNo {
             font-size: 0.90rem;
         }
+        #customModal {
+        width: 90%; /* or 95% or even 100% if needed */
+        top: -15em; /* adjust as needed to avoid vertical clipping */
+    }
+     #customModal .d-flex {
+        flex-direction: column;
+    }
     }
 </style>
