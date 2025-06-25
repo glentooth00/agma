@@ -14,7 +14,7 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'server' => '192.168.4.67',
-            'database' => 'membership',
+            'database' => 'ILECO3_TEST',
             'username' => '',
             'password' => '',
         ]

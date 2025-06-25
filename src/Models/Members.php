@@ -11,7 +11,7 @@ class Members
     private $stmt;
     private $query;
 
-    private $table = "tbl_consumers";
+    private $table = "consumer";
 
     public function __construct()
     {
@@ -74,27 +74,50 @@ class Members
 
     }
 
+    //search using name, Account number and Meter Number
     public function searchMember($search)
     {
         try {
-            $sql = "SELECT * FROM {$this->table}
-                WHERE account_no LIKE :account_no
-                   OR member_name LIKE :member_name";
+            $sql = "SELECT 
+                        C.*,
+                        M.*,
+                        -- Format: 11-1121-0080
+                        (CAST(C.TownCode AS VARCHAR) + '-' +
+                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
+                        CAST(C.AcctCode AS VARCHAR)) AS AccountNumber
+                    FROM Consumer C
+                    INNER JOIN Meter M ON C.ConsumerID = M.ConsumerID
+                    WHERE 
+                        -- Match against formatted Account Number
+                        (CAST(C.TownCode AS VARCHAR) + '-' + 
+                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
+                        CAST(C.AcctCode AS VARCHAR)) LIKE :account_number
+                        OR C.Name LIKE :name
+                        OR M.MeterSN = :meter_sn";
 
             $stmt = $this->db->prepare($sql);
 
-            $likeTerm = '%' . $search . '%';
+            $likeSearch = '%' . $search . '%';
 
-            $stmt->bindValue(':account_no', $likeTerm, PDO::PARAM_STR);
-            $stmt->bindValue(':member_name', $likeTerm, PDO::PARAM_STR);
+            $stmt->bindValue(':account_number', $likeSearch, PDO::PARAM_STR);
+            $stmt->bindValue(':name', $likeSearch, PDO::PARAM_STR);
+            $stmt->bindValue(':meter_sn', $search, PDO::PARAM_STR); // exact match
 
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (\PDOException $e) {
             die("Database error: " . $e->getMessage());
         }
     }
+
+
+
+
+
+
+
 
 
 
