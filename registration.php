@@ -251,7 +251,7 @@ function closeDiv() {
         margin: auto;
         position: relative;
         width: 35%;
-        top: -20em;
+        top: -15em;
         padding: 20px;
         border-radius: 10px;
         box-shadow: #000000db 20px 20px 20px 60em;
