@@ -22,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                 <tbody>';
 
         foreach ($results as $row) {
-            $id = htmlspecialchars($row['id'] ?? '');
-            $name = htmlspecialchars($row['member_name'] ?? '');
-            $account = htmlspecialchars($row['account_no'] ?? '');
-            $address = htmlspecialchars($row['barangay'] ?? '');
+            $id = htmlspecialchars($row['ConsumerId'] ?? '');
+            $name = htmlspecialchars($row['Name'] ?? '');
+            $address = htmlspecialchars($row['Address'] ?? '');
             $memberOr = htmlspecialchars($row['member_or'] ?? '');
+            $accountNo = $row['TownCode'].'-'.$row['TownCode'].''.$row['RouteCode'].'-'.$row['AcctCode'];
 
             echo '<tr>
                 <td>' . $name . '</td>
-                <td>' . $account . '</td>
+                <td>' . $accountNo . '</td>
                 <td>' . $address . '</td>
                 <td>' . $memberOr . '</td>
                 <td>
@@ -43,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                             aria-controls="offcanvasExample"
                             data-id="' . $id . '"
                             data-name="' . $name . '"
-                            data-account="' . $account . '"
+                            data-account="' . $accountNo . '"
                             data-address="' . $address . '"
-                            data-or="' . $memberOr . '"
+                            
                         >
                             View
                         </button>

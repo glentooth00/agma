@@ -84,22 +84,21 @@ include_once __DIR__ . '/vendor/autoload.php';
                     <dotlottie-player src="https://lottie.host/45b316dd-8e34-4b8d-a7e4-d8648190f9f1/Dy1SBBe7z1.lottie"
                         background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
                     </dotlottie-player>
-
                     <h1 style="text-align: center;">No Data Found</h1>
                 </div>
-
             <?php endif; ?>
         <?php endif; ?>
-
-
     </div>
 </div>
+
+
 
 
 <div id="customModal">
     <h3>Register</h3>
     <span id="close" class="float-end" onclick="closeDiv()"><i class="fa fa-close"></i></span>
     <hr>
+    <form>
     <input type="hidden" name="id" id="id" readonly>
     <div class="col-d-12 d-flex gap-3 mb-2">
         <div class="mb-2">
@@ -129,26 +128,39 @@ include_once __DIR__ . '/vendor/autoload.php';
         
         <div class="mb-2">
             <div class="mb-2">
-                <label class="badge text-muted">Member Name</label>
-                <input type="text" name="member_name" id="memberName" readonly>
+                <label class="badge text-muted">Member Name <span id="required">*</span></label>
+                <input type="text" name="member_name" id="memberName" required>
             </div>
             <div class="mb-2">
-                <label class="badge text-muted">Meter number</label>
-                <input type="text" name="member_name" id="meterNumber" readonly>
+                <label class="badge text-muted">Meter number <span id="required">*</span></label>
+                <input type="text" name="member_name" id="meterNumber" required>
             </div>
         </div>
         <div class="mb-2">
             <div class="mb-2">
-                <label class="badge text-muted">Account number</label>
-                <input type="text" name="accountNumber" id="accountNumber" readonly>
+                <label class="badge text-muted">Account number <span id="required">*</span></label>
+                <input type="text" name="accountNumber" id="accountNumber" required>
             </div>
             <div class="mb-2">
-                <label class="badge text-muted">Address</label>
-                <input type="text" name="Address" id="address" readonly>
+                <label class="badge text-muted">Address <span id="required">*</span></label>
+                <input type="text" name="Address" id="address" required>
             </div>
         </div>
     </div>
-
+    <hr>
+    <div>
+        <h5>ID Attachment <span id="required">*</span></h5>
+        <div class="mt-4 mb-4">
+            <input type="file" name="image_id" id="image_id" required>
+        </div>
+        <div>
+        <div id="buttonHolder" class="">
+           <button style="margin-left: 24em;margin-top: 1em;" class="btn btn-block">Submit</button> 
+        </div>
+    </div>
+    </div>
+    
+    </form>
 </div>
 
 
@@ -165,8 +177,14 @@ require_once __DIR__ . '/views/layouts/footer.php';
         } else {
             modal.style.display = "block";
         }
-
     }
+
+$(document).keydown(function(event) { 
+  if (event.keyCode == 27) { 
+    $('#customModal').hide();
+  
+  }
+});
 
 function closeDiv() {
     var modal = document.getElementById('customModal');
@@ -244,18 +262,45 @@ function closeDiv() {
 </script>
 
 <style>
+#required{
+    color: red;
+}
+#customModal {
+    display: none;
+    background-color: #ffffff;
+    margin: auto;
+    position: relative;
+    width: 50%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: #212121cc 0px 10px 10px 100em;
+    top: -15em;
+}
+#customModal .d-flex {
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 
-    #customModal {
-        display: none;
-        background-color: #ffffff;
-        margin: auto;
-        position: relative;
-        width: 35%;
-        top: -15em;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: #000000db 20px 20px 20px 60em;
-    }
+#customModal .d-flex > div {
+    flex: 1 1 45%;
+}
+
+#customModal input[type="text"],
+#customModal input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+#buttonHolder {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+#buttonHolder button {
+    padding: 0.5rem 1.5rem;
+}
 
     #close {
         position: relative;
@@ -354,12 +399,19 @@ function closeDiv() {
         #accountNo {
             font-size: 0.90rem;
         }
-        #customModal {
-        width: 90%; /* or 95% or even 100% if needed */
-        top: -15em; /* adjust as needed to avoid vertical clipping */
+    #customModal {
+        width: 90%;
+        top: -10em;
     }
-     #customModal .d-flex {
+    #customModal .d-flex {
         flex-direction: column;
+    }
+        #customModal .d-flex > div {
+        flex: 1 1 100%;
+    }
+
+    #buttonHolder {
+        justify-content: right;
     }
     }
 </style>

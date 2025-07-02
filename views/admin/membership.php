@@ -104,7 +104,7 @@ $userid = $_SESSION['data']['id'];
                         <label for="searchInput" class="search-label">Search:</label>
                         <div class="search-wrapper">
                             <input type="text" name="member_data" id="searchInput"
-                                placeholder="Search member Account number, Name, Meter number">
+                                placeholder="Search member Account number, Name, Meter number" required>
                             <i class="fa fa-search"></i>
                         </div>
                     </form>
