@@ -11,35 +11,57 @@ $userid = $_SESSION['data']['id'];
 ?>
 
 
-<div class="offcanvas offcanvas-start" style="width: 1000px;" tabindex="-1" id="offcanvasExample"
+<div class="offcanvas offcanvas-start shadow-lg rounded-3" style="width: 900px;" tabindex="-1" id="offcanvasExample"
     aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-        <h4 class="offcanvas-title" id="offcanvasExampleLabel">Member Details</h4>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    
+    <!-- Header -->
+    <div class="offcanvas-header text-white rounded-top" style="background:#1e293b;">
+        <h4 class="offcanvas-title fw-semibold mb-0" id="offcanvasExampleLabel">
+            <i class="bi bi-person-lines-fill me-2"></i>Member Details
+        </h4>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <hr>
-    <div class="offcanvas-body">
-        <div class="mb-3">
-            <label class="form-label"><strong>Member Name:</strong></label>
-            <p id="offcanvasName"></p>
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><strong>Account Number:</strong></label>
-            <p id="offcanvasAccount"></p>
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><strong>Address:</strong></label>
-            <p id="offcanvasAddress"></p>
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><strong>Member OR:</strong></label>
-            <p id="offcanvasOR"></p>
+
+    <div class="offcanvas-body bg-light">
+        <div class="row g-4">
+            <!-- Left column: member details -->
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-4 p-3">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Member Name</label>
+                        <p id="offcanvasName" class="text-dark fs-5 fw-semibold"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Account Number</label>
+                        <p id="offcanvasAccount" class="text-dark fs-5 fw-semibold"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Address</label>
+                        <p id="offcanvasAddress" class="text-dark"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Member OR</label>
+                        <p id="offcanvasOR" class="text-dark"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right column: QR Code -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 d-flex flex-column justify-content-center align-items-center">
+                    <label class="form-label fw-bold text-secondary mb-3">QR Code</label>
+                    <div id="offcanvasQR" class="bg-white border rounded-3 p-3 shadow-sm"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="d-flex p-3 float-end">
+
+    <!-- Footer -->
+    <div class="d-flex p-3 justify-content-end border-top bg-white">
         <button class="btn btn-success" id="editBtn">Edit</button>
     </div>
 </div>
+
 
 
 <div class="card" id="deletePopup" style="
@@ -250,6 +272,16 @@ $userid = $_SESSION['data']['id'];
         background-color: rgb(205 61 61);
         border: 1px solid rgb(181 42 42);
     }
+
+    #offcanvasQR canvas {
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 5px;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
 </style>
 <script>
     document.querySelector('.search-form').addEventListener('submit', function (e) {
@@ -302,6 +334,38 @@ $userid = $_SESSION['data']['id'];
             document.getElementById('offcanvasOR').innerText = button.getAttribute('data-or') || '';
         });
     });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const offcanvasEl = document.getElementById('offcanvasExample');
+
+    offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
+        const button = event.relatedTarget;
+
+        const name = button.getAttribute('data-name') || '';
+        const account = button.getAttribute('data-account') || '';
+        const address = button.getAttribute('data-address') || '';
+        const orNumber = button.getAttribute('data-or') || '';
+
+        // Fill offcanvas text
+        document.getElementById('offcanvasName').innerText = name;
+        document.getElementById('offcanvasAccount').innerText = account;
+        document.getElementById('offcanvasAddress').innerText = address;
+        document.getElementById('offcanvasOR').innerText = orNumber;
+
+        // Generate QR code
+        const qrContainer = document.getElementById('offcanvasQR');
+        qrContainer.innerHTML = ''; // Clear previous QR code
+
+        const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}`;
+        new QRCode(qrContainer, {
+            text: qrText,
+            width: 208,
+            height: 208,
+        });
+    });
+});
+
 
 
 </script>
