@@ -13,8 +13,8 @@ return [
         ],
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'server' => '192.168.4.67',
-            'database' => 'ILECO3_TEST',
+            'server' => '192.168.1.10',
+            'database' => 'ILECO3',
             'username' => '',
             'password' => '',
         ]
