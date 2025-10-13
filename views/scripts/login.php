@@ -23,7 +23,9 @@ if ($login == true) {
     if ($hashedPassword === $password) {
 
         $_SESSION['data'] = [
-            'name' => $login['name'],
+            'firstname' => $login['firstname'],
+            'middlename' => $login['middlename'],
+            'lastname' => $login['lastname'],
             'user_type' => $login['user_type'],
             'id' => $login['id'],
             'status' => 'Online',
@@ -32,15 +34,14 @@ if ($login == true) {
             'updated_at' => date('Y-m-d H:i:s')
         ];
 
-        (new UsersController)->loginStatusUpdate($_SESSION['data']);
+        $auth = (new UsersController)->loginStatusUpdate($_SESSION['data']);
 
+        
         header('Location: ../admin/index.php');
 
-    } else {
+        
 
-        echo "Password did not match";
-
-    }
+    } 
 
 
 } else {
