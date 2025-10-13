@@ -37,6 +37,9 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <!-- Inside <head> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- QR CODE --->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 
     <!-- custom css  --->
     <link rel="stylesheet" type="text/css" href="assets/css/login.css">
