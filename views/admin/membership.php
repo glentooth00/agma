@@ -13,13 +13,14 @@ $userid = $_SESSION['data']['id'];
 
 <div class="offcanvas offcanvas-start shadow-lg rounded-3" style="width: 900px;" tabindex="-1" id="offcanvasExample"
     aria-labelledby="offcanvasExampleLabel">
-    
+
     <!-- Header -->
     <div class="offcanvas-header text-white rounded-top" style="background:#1e293b;">
         <h4 class="offcanvas-title fw-semibold mb-0" id="offcanvasExampleLabel">
             <i class="bi bi-person-lines-fill me-2"></i>Member Details
         </h4>
-        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
     </div>
 
     <div class="offcanvas-body bg-light">
@@ -48,7 +49,8 @@ $userid = $_SESSION['data']['id'];
 
             <!-- Right column: QR Code -->
             <div class="col-md-4">
-                <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 d-flex flex-column justify-content-center align-items-center">
+                <div
+                    class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 d-flex flex-column justify-content-center align-items-center">
                     <label class="form-label fw-bold text-secondary mb-3">QR Code</label>
                     <div id="offcanvasQR" class="bg-white border rounded-3 p-3 shadow-sm"></div>
                 </div>
@@ -279,9 +281,8 @@ $userid = $_SESSION['data']['id'];
         border-radius: 8px;
         padding: 5px;
         background: #fff;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-
 </style>
 <script>
     document.querySelector('.search-form').addEventListener('submit', function (e) {
@@ -337,34 +338,34 @@ $userid = $_SESSION['data']['id'];
 
 
     document.addEventListener('DOMContentLoaded', function () {
-    const offcanvasEl = document.getElementById('offcanvasExample');
+        const offcanvasEl = document.getElementById('offcanvasExample');
 
-    offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
-        const button = event.relatedTarget;
+        offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
+            const button = event.relatedTarget;
 
-        const name = button.getAttribute('data-name') || '';
-        const account = button.getAttribute('data-account') || '';
-        const address = button.getAttribute('data-address') || '';
-        const orNumber = button.getAttribute('data-or') || '';
+            const name = button.getAttribute('data-name') || '';
+            const account = button.getAttribute('data-account') || '';
+            const address = button.getAttribute('data-address') || '';
+            const orNumber = button.getAttribute('data-or') || '';
 
-        // Fill offcanvas text
-        document.getElementById('offcanvasName').innerText = name;
-        document.getElementById('offcanvasAccount').innerText = account;
-        document.getElementById('offcanvasAddress').innerText = address;
-        document.getElementById('offcanvasOR').innerText = orNumber;
+            // Fill offcanvas text
+            document.getElementById('offcanvasName').innerText = name;
+            document.getElementById('offcanvasAccount').innerText = account;
+            document.getElementById('offcanvasAddress').innerText = address;
+            document.getElementById('offcanvasOR').innerText = orNumber;
 
-        // Generate QR code
-        const qrContainer = document.getElementById('offcanvasQR');
-        qrContainer.innerHTML = ''; // Clear previous QR code
+            // Generate QR code
+            const qrContainer = document.getElementById('offcanvasQR');
+            qrContainer.innerHTML = ''; // Clear previous QR code
 
-        const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}`;
-        new QRCode(qrContainer, {
-            text: qrText,
-            width: 208,
-            height: 208,
+            const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}`;
+            new QRCode(qrContainer, {
+                text: qrText,
+                width: 208,
+                height: 208,
+            });
         });
     });
-});
 
 
 

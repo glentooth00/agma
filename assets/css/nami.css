@@ -14,7 +14,7 @@
 
     .sidebar {
         border-radius: 16px;
-        margin: 2rem;
+        margin: 1rem;
         width: 260px;
         background-color: #1e293b;
         color: white;
@@ -55,7 +55,7 @@
         padding: 2.5rem;
         background-color: white;
         border-radius: 16px;
-        margin: 2rem;
+        margin: 1rem;
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
 
@@ -76,7 +76,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #1e293b;
+    background: rgb(0, 82, 204);
     color: white;
     padding: 1rem 2rem;
     font-size: 1.1rem;
@@ -129,10 +129,20 @@
 .cardDash{
     position: relative; /* required for `top` to work OR transform */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .cardDash:hover{
     cursor: pointer;
     transform: translateY(-4px);
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.mint-green{
+    background-color: #c5f5e6;
+}
+.baby-blue{
+    background-color: #b4ecff;
+}
+
+.red-bloom{
+    background-color: #FF6363;
 }

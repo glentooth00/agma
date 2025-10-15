@@ -19,7 +19,7 @@
     </div>
 </div>
 <?php if (!empty($_SESSION['notification'])): ?>
-    <div class="error" id="errorMessage" title="Error" style="color: red;">
+    <div class="error border-danger text-danger dm-sans-error" id="errorMessage" title="Error">
         <button id="closeError"
             style="position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
         <h5><?= $_SESSION['notification']['message'] ?></h5>
@@ -29,26 +29,25 @@
 <style>
     #username,
     #passwordField {
-        position: relative;
-        cursor: text;
+        width: 100%;
+        height: 36px;
+        border-radius: 4px;
+        padding-left: 12px;
         font-size: 14px;
-        line-height: 20px;
-        padding: 0 16px;
-        height: 48px;
-        background-color: #fff;
-        border: 1px solid #d6d6e7;
-        border-radius: 3px;
-        color: rgb(35, 38, 59);
-        box-shadow: inset 0 1px 4px 0 rgb(119 122 175 / 30%);
-        overflow: hidden;
-        transition: all 100ms ease-in-out;
-
-        :focus {
-            border-color: #3c4fe0;
-            box-shadow: 0 1px 0 0 rgb(35 38 59 / 5%);
-        }
-
+        font-weight: normal;
+        border: 1px solid rgb(137, 151, 155);
+        transition: border-color 150ms ease-in-out 0s;
+        outline: none;
+        color: rgb(33, 49, 60);
+        background-color: rgb(255, 255, 255);
+        padding-right: 12px;
     }
+
+    #username,
+    #passwordField :hover {
+        box-shadow: rgb(231 238 236) 0px 0px 0px 3px;
+    }
+
 
     #errorMessage {
         position: absolute;
@@ -63,8 +62,7 @@
         color: red;
         text-align: center;
         border-radius: 8px;
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-        font-family: Arial, sans-serif;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 </style>
 
