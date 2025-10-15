@@ -164,7 +164,7 @@
   z-index: 0;
 }
 
-.cardDash h5{
+.cardDash h4{
     text-align: left;
 }
 .cardDash h1 {
@@ -196,7 +196,7 @@
   z-index: 0;
 }
 
-.cardDash h5,
+.cardDash h4,
 .cardDash h1,
 .cardDash p {
   position: relative;

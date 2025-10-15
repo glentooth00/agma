@@ -35,14 +35,14 @@ $userid = $_SESSION['data']['id'];
                         <?php
                         $totalMembers = (new MembersController)->countAllMembers();
                         ?>
-                        <h5>Total Members</h5>
+                        <h4 style="color:#334443;">Total Members</h4>
                         <i class="fa fa-users" aria-hidden="true"></i>
 
                         <h1 style="text-align:center;"><?= $totalMembers ?></h1>
                     </div>
                 </a>
                 <div class="card baby-blue cardDash" id="newMembers">
-                    <h5>Attendees</h5>
+                    <h4 style="color:#334443;">Attendees</h4>
                     <i class="fa fa-users" aria-hidden="true"></i>
                     <p>5</p>
                 </div>
