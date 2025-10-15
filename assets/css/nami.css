@@ -16,8 +16,8 @@
         border-radius: 16px;
         margin: 1rem;
         width: 260px;
-        background-color: #1e293b;
-        color: white;
+        /* background-color: #1e293b; */
+        color: #37353E;
         padding: 2rem 1.5rem;
         display: flex;
         flex-direction: column;
@@ -35,19 +35,21 @@
         display: block;
         padding: .5em;
         border-radius: 8px;
-        color: white;
+        color: #37353E;
         text-decoration: none;
         font-weight: 500;
         transition: background 0.2s;
     }
 
     .sidebar a:hover{
-        background-color: #f97316;
-         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        color: white;
+        background-color: rgb(51, 131, 252);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
     .sidebar a.active {
-        background-color: #f97316;
-         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        color: white;
+        background-color: rgb(0, 82, 204);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
 
     .content {
@@ -129,12 +131,12 @@
 .cardDash{
     position: relative; /* required for `top` to work OR transform */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .cardDash:hover{
     cursor: pointer;
     transform: translateY(-4px);
-     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .mint-green{
     background-color: #16C47F;

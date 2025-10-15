@@ -4,9 +4,11 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 use App\Controllers\MembersController;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
+
     $search = trim($_POST['member_data']);
     $controller = new MembersController();
     $results = $controller->searchMember($search);
+
 
     if ($results && count($results) > 0) {
         echo '<br><table id="searchTable" class="mt-3 table table-stripe table-bordered hover display" style="width: 100%; background-color: white;">
@@ -26,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
             $name = htmlspecialchars($row['Name'] ?? '');
             $address = htmlspecialchars($row['Address'] ?? '');
             $memberOr = htmlspecialchars($row['member_or'] ?? '');
-            $accountNo = $row['TownCode'].'-'.$row['TownCode'].''.$row['RouteCode'].'-'.$row['AcctCode'];
+            $accountNo = $row['TownCode'] . '-' . $row['TownCode'] . '' . $row['RouteCode'] . '-' . $row['AcctCode'];
 
             echo '<tr>
                 <td>' . $name . '</td>

@@ -15,9 +15,11 @@ $userid = $_SESSION['data']['id'];
     aria-labelledby="offcanvasExampleLabel">
 
     <!-- Header -->
-    <div class="offcanvas-header text-white rounded-top" style="background:#1e293b;">
+    <div class="offcanvas-header text-white rounded-top" style="background: rgb(0, 82, 204);">
         <h4 class="offcanvas-title fw-semibold mb-0" id="offcanvasExampleLabel">
-            <i class="bi bi-person-lines-fill me-2"></i>Member Details
+            <i class="fa-regular fa-address-card me-2"></i>
+
+            Member Details
         </h4>
         <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
@@ -282,6 +284,10 @@ $userid = $_SESSION['data']['id'];
         padding: 5px;
         background: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .offcanvas-header {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
 </style>
 <script>
