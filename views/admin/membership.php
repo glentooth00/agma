@@ -123,7 +123,7 @@ $userid = $_SESSION['data']['id'];
             <?php include_once __DIR__ . '../../components/menu/sidebar.php'; ?>
             <div class="content">
                 <h3>Members </h3>
-                <hr style="margin-bottom: 2rem; border-color: #e2e8f0;">
+                <hr style="margin-bottom: 1rem; border-color: #e2e8f0;">
 
                 <div id="searchArea">
                     <form action="functions/search.php" method="post" class="search-form">
