@@ -48,6 +48,24 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link rel="stylesheet" type="text/css" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/nami.css">
     <link rel="stylesheet" type="text/css" href="assets/css/registration.css">
+
+
+    <!------ Google fonts -------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .dm-sans-error {
+            font-family: "DM Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+    </style>
+
 </head>
 
 <body style="background-color: #31363F;padding:10px;">

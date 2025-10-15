@@ -9,14 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
     $results = $controller->searchMember($search);
 
     if ($results && count($results) > 0) {
-        echo '<table id="searchTable" class=" mt-3 table table-bordered table-striped display mt-2 hover" style="width: 100%; background-color: white;">
-                <thead>
+        echo '<br><table id="searchTable" class="mt-3 table table-stripe table-bordered hover display" style="width: 100%; background-color: white;">
+                <thead class="table-dark mt-2">
                     <tr>
                         <th>Member Name</th>
-                        <th>Account Number</th>
-                        <th>Address</th>
-                        <th>Member OR</th>
-                        <th>Actions</th>
+                        <th style="text-align:center;">Account Number</th>
+                        <th style="text-align:center;">Address</th>
+                        <th style="text-align:center;">Member OR</th>
+                        <th style="text-align:center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -30,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
 
             echo '<tr>
                 <td>' . $name . '</td>
-                <td>' . $accountNo . '</td>
-                <td>' . $address . '</td>
+                <td style="text-align:center;">' . $accountNo . '</td>
+                <td style="text-align:center;">' . $address . '</td>
                 <td>' . $memberOr . '</td>
-                <td>
+                <td style="text-align:center;">
                     <div style="display: flex; gap: 5px; justify-content: center;">
                         <button
                             id="ViewBtn"
