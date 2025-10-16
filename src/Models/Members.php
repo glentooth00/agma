@@ -39,18 +39,16 @@ class Members
         $stmt->execute([$status, $lastLogin, $updatedAt, $id,]);
     }
 
-public function getAll($limit = 100, $offset = 0)
-{
-    $sql = "SELECT * FROM {$this->table} ORDER BY ConsumerID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(1, $offset, PDO::PARAM_INT);
-    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-    $stmt->execute();
+    public function getAll($limit = 100, $offset = 0)
+    {
+        $sql = "SELECT * FROM {$this->table} ORDER BY ConsumerID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(1, $offset, PDO::PARAM_INT);
+        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     public function countAll()

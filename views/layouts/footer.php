@@ -15,6 +15,34 @@ $logoPath = file_exists('../../assets/images/logo.png')
     </div>
 </div>
 
+<!-- Loading Overlay -->
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="
+    display: none;
+    position: fixed;
+    top: 0em; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+">
+    <div role="status" class="mt-5">
+        <img src='../../assets/images/search.gif' alt='Loading...' style="width: 400px;top:15px;">
+    </div>
+    <p class="mt-3 fw-bold" style="color: rgb(0, 82, 204); font-size: 1.2rem;">
+        Fetching Data, please wait...
+    </p>
+</div>
+
+
+
+
+
+
 </body>
 
 </html>

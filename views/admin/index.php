@@ -31,22 +31,26 @@ $userid = $_SESSION['data']['id'];
 
             <div class="card-grid">
                 <a href="membership.php">
-                    <div class="card mint-green cardDash">
+                    <div class="card mint-green cardDash" id="totalMembers">
                         <?php
                         $totalMembers = (new MembersController)->countAllMembers();
                         ?>
-                        <h5>Total Members</h5>
+                        <h4 style="color:#334443;">Total Members</h4>
+                        <i class="fa fa-users" aria-hidden="true"></i>
+
                         <h1 style="text-align:center;"><?= $totalMembers ?></h1>
                     </div>
                 </a>
-                <div class="card baby-blue cardDash">
-                    <h5>New Members</h5>
+                <div class="card baby-blue cardDash" id="newMembers">
+                    <h4 style="color:#334443;">Attendees</h4>
+                    <i class="fa fa-users" aria-hidden="true"></i>
                     <p>5</p>
                 </div>
-                <div class="card red-bloom cardDash">
+
+                <!-- <div class="card red-bloom cardDash">
                     <h5>Disconnected Accounts</h5>
                     <p>3</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
