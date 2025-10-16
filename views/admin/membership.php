@@ -126,7 +126,7 @@ $userid = $_SESSION['data']['id'];
                 <hr style="margin-bottom: 1rem; border-color: #e2e8f0;">
 
                 <div id="searchArea">
-                    <form action="functions/search.php" method="post" class="search-form">
+                    <form id="searchForm" class="search-form">
                         <label for="searchInput" class="search-label">Search:</label>
                         <div class="search-wrapper">
                             <input type="text" name="member_data" id="searchInput"
@@ -136,9 +136,15 @@ $userid = $_SESSION['data']['id'];
                     </form>
                 </div>
 
-                <div id="resultDiv">
+                <!-- Loading message -->
+                <!-- <div id="loadingMessage" style="display: none; text-align:center; margin-top:20px;">
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 fw-bold">Fetching data, please wait...</p>
+                </div> -->
 
-                </div>
+                <div id="searchResults"></div>
 
             </div>
         </div>
@@ -157,6 +163,11 @@ $userid = $_SESSION['data']['id'];
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+    #contentWrapper.loading {
+        filter: blur(3px);
+        pointer-events: none;
+    }
+
     #searchArea {
         display: flex;
         align-items: center;
@@ -289,6 +300,26 @@ $userid = $_SESSION['data']['id'];
     .offcanvas-header {
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
+
+    #loadingOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #loadingOverlay.active {
+        display: flex;
+    }
 </style>
 <script>
     document.querySelector('.search-form').addEventListener('submit', function (e) {
@@ -369,6 +400,48 @@ $userid = $_SESSION['data']['id'];
                 text: qrText,
                 width: 208,
                 height: 208,
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#searchForm').on('submit', function (e) {
+            e.preventDefault();
+            const searchValue = $('#searchInput').val();
+
+            // Show loading overlay
+            $('#loadingOverlay').fadeIn(200);
+
+            $.ajax({
+                url: 'functions/search.php',
+                method: 'POST',
+                data: { member_data: searchValue },
+                success: function (response) {
+                    // Inject the new table
+                    $('#searchResults').html(response);
+
+                    // Reinitialize DataTable AFTER table is loaded
+                    if ($.fn.DataTable.isDataTable('#searchTable')) {
+                        $('#searchTable').DataTable().destroy();
+                    }
+
+                    $('#searchTable').DataTable({
+                        responsive: true,
+                        paging: true,
+                        searching: true,
+                        ordering: true,
+                        lengthMenu: [5, 10, 25, 50],
+                        pageLength: 10
+                    });
+                },
+                error: function () {
+                    alert('An error occurred while fetching data.');
+                },
+                complete: function () {
+                    // Hide loading overlay
+                    $('#loadingOverlay').fadeOut(200);
+                }
             });
         });
     });
