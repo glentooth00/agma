@@ -48,6 +48,18 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link rel="stylesheet" type="text/css" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/nami.css">
     <link rel="stylesheet" type="text/css" href="assets/css/registration.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/elements.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/popups.css">
+
+     <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 
     <!------ Google fonts -------->

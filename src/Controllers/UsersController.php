@@ -26,6 +26,15 @@ class UsersController
         (new User)->updateLogoutStatus($data);
     }
 
+    public function fetchAllUsers()
+    {
+        return (new User)->getUsers();
+    }
+
+    public function createUser($data)
+    {
+        return (new User)->addUser($data);
+    }
 
 
 }
