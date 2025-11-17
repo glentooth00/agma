@@ -2,4 +2,8 @@
 session_start();
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-var_dump($_POST);
+use App\Controllers\UsersController;
+
+$deleteUserId = $_POST['id'];
+
+$delete = (new UsersController)->deleteUserById($deleteUserId);
