@@ -9,8 +9,6 @@ $currentPage = 'Dashboard';
 
 $userid = $_SESSION['data']['id'];
 
-
-
 ?>
 
 <div class="app-container">
