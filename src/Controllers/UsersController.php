@@ -36,5 +36,16 @@ class UsersController
         return (new User)->addUser($data);
     }
 
+    public function getuser($id)
+    {
+        return (new User)->getUserbyId($id);
+
+    }
+
+    public function deleteUserById($id)
+    {
+        return (new User)->deleteUser($id);
+    }
+
 
 }

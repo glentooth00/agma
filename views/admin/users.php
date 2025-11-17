@@ -1,13 +1,13 @@
 <?php
 use App\Controllers\UsersController;
+$pagetitle = 'Users';
 
+$currentPage = 'Users';
 include_once __DIR__ . '../../../vendor/autoload.php';
 
 include_once __DIR__ . '../../layouts/header.php';
 
-$pagetitle = 'Users';
 
-$currentPage = 'Users';
 
 $userid = $_SESSION['data']['id'];
 
@@ -105,7 +105,7 @@ $users = (new UsersController)->fetchAllUsers();
                                     <td colspan="1"><?= htmlspecialchars($user['firstname'] . ' ' . $user['middlename'] . ' ' . $user['lastname']) ?></td>
                                     <td><?= htmlspecialchars($user['role']) ?></td>
                                     <td style="text-align: center;">
-                                        <button class="edit-button"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
+                                        <button class="edit-button" data-toggle="modal" data-target="#viewModal" data-userid="<?= $user['id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
                                         <button class="delete-button btn-delete" data-userid="<?= $user['id'] ?>"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
                                     </td>
                                 </tr>
@@ -125,9 +125,25 @@ $users = (new UsersController)->fetchAllUsers();
         <span id="popupMessage">Message here</span>
     </div>
 
+<div id="viewModal" class="modal">
+    <div id="modalInner">
+        <div class="modal-content">
+            <span class="close-button" id="closeViewModal">&times;</span>
+            <h2 class="modal-title">User Details</h2>
+            
+            <div id="userDetailsContent" class="user-details">
+                <!-- User info will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </div>
 
 <?php include_once __DIR__ . '../../layouts/footer.php'; ?>
 
 
 <?php include '../components/popup/sidepopup.php'; ?>
+<?php include '../components/modals/view_modal.php'; ?>

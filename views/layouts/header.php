@@ -50,6 +50,7 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link rel="stylesheet" type="text/css" href="assets/css/registration.css">
      <link rel="stylesheet" type="text/css" href="../../assets/css/elements.css">
      <link rel="stylesheet" type="text/css" href="../../assets/css/popups.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/modals.css">
 
      <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -89,4 +89,14 @@ class User
     
     }
 
+    public function getUserbyId($id){
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
 }
