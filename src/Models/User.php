@@ -49,4 +49,44 @@ class User
         $stmt->execute([$status, $lastLogout, $updatedAt, $id,]);
     }
 
+    public function getUsers(){
+
+        $sql = "SELECT * FROM " . $this->table;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addUser($data){
+
+        $sql = "INSERT INTO " . $this->table . " (username, password, role, firstname, lastname, middlename, created_at, updated_at, status) 
+                VALUES (:username, :password, :role, :firstname, :lastname, :middlename, :created_at, :updated_at, :status)";
+
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':username' => $data['username'],
+            ':password' => $data['password'],
+            ':role' => $data['role'],
+            ':firstname' => $data['firstname'],
+            ':lastname' => $data['lastname'],
+            ':middlename' => $data['middlename'],
+            ':created_at' => $data['created_at'],
+            ':updated_at' => $data['updated_at'],
+            ':status' => $data['status']
+        ]);
+    
+    }
+
+    public function deleteUser($id){
+
+        $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([':id' => $id]);
+    
+    }
+
 }

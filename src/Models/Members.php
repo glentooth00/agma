@@ -116,8 +116,13 @@ class Members
     }
 
 
+    public function getAllAttendees(){
+        $sql = "SELECT * FROM ScannedQRData";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
 
-
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 

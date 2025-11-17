@@ -1,0 +1,87 @@
+#deleteConfirmation {
+    display: none; /* hidden initially */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* center */
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10000;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#deleteConfirmation .button-group button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#deleteConfirmation #cancelDeleteBtn {
+    background: #6c757d;
+    color: #fff;
+}
+
+#deleteConfirmation #confirmDeleteBtn {
+    background: #dc3545;
+    color: #fff;
+}
+
+
+
+
+#cancelDeleteBtn{
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        padding: 0 16px;
+        background-color: #ffffff;
+        border-radius: 0.25rem;
+        border: 1px solid #211f1f;
+        color: #000000;
+        font-size: 13px;
+        line-height: 30px;
+        font-weight: 400;
+        text-align: center;
+}
+#cancelDeleteBtn:hover {
+        background-color: #ffffff;  
+        border-color: #040303;
+} 
+
+#deleteConfirmation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10000;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Popup notification */
+#sidePopup {
+    position: fixed;
+    bottom: 20px;
+    right: -300px;
+    background: #333;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 9999;
+    transition: right 0.5s ease;
+}
+#sidePopup.show {
+    right: 20px;
+}
