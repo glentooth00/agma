@@ -384,18 +384,22 @@ $userid = $_SESSION['data']['id'];
             const account = button.getAttribute('data-account') || '';
             const address = button.getAttribute('data-address') || '';
             const orNumber = button.getAttribute('data-or') || '';
+            const townCode = button.getAttribute('data-towncode') || '';
+
 
             // Fill offcanvas text
             document.getElementById('offcanvasName').innerText = name;
             document.getElementById('offcanvasAccount').innerText = account;
             document.getElementById('offcanvasAddress').innerText = address;
             document.getElementById('offcanvasOR').innerText = orNumber;
+            // document.getElementById('offcanvasTowncode').innerText = townCode;
+
 
             // Generate QR code
             const qrContainer = document.getElementById('offcanvasQR');
             qrContainer.innerHTML = ''; // Clear previous QR code
 
-            const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}`;
+            const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}\nTown Code: ${townCode}`;
             new QRCode(qrContainer, {
                 text: qrText,
                 width: 208,
