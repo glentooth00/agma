@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
             $address = htmlspecialchars($row['Address'] ?? '');
             $memberOr = htmlspecialchars($row['member_or'] ?? '');
             $accountNo = $row['TownCode'] . '-' . $row['TownCode'] . '' . $row['RouteCode'] . '-' . $row['AcctCode'];
+            $townCode = htmlspecialchars($row['TownCode'] ?? '');
 
             echo '<tr>
                 <td>' . $name . '</td>
@@ -47,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                             data-name="' . $name . '"
                             data-account="' . $accountNo . '"
                             data-address="' . $address . '"
+                            data-townCode="' . $townCode . '"
                             
                         >
                             View
