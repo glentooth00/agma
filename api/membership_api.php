@@ -11,6 +11,11 @@ $account_no = $data["account_no"] ?? '';
 $consumer_name = $data["consumer_name"] ?? '';
 $address = $data["address"] ?? '';
 $or_number = $data["or_number"] ?? '';
+$townCode = $data["townCode"]
+         ?? $data["towncode"]
+         ?? $data["town_code"]
+         ?? '';
+
 
 if (empty($account_no) || empty($consumer_name)) {
     echo "Missing account number or consumer name";
@@ -40,15 +45,16 @@ try {
 
     // Insert new record
     $stmt = $conn->prepare("
-        INSERT INTO ScannedQRData (account_no, consumer_name, address, or_number, created_at, updated_at)
-        VALUES (:account_no, :consumer_name, :address, :or_number, GETDATE(), GETDATE())
+        INSERT INTO ScannedQRData (account_no, consumer_name, address, or_number, townCode, created_at, updated_at)
+        VALUES (:account_no, :consumer_name, :address, :or_number, :townCode, GETDATE(), GETDATE())
     ");
 
     $stmt->execute([
         ":account_no" => $account_no,
         ":consumer_name" => $consumer_name,
         ":address" => $address,
-        ":or_number" => $or_number
+        ":or_number" => $or_number,
+        ":townCode" => $townCode
     ]);
 
     echo "success"; // <-- Plain text "success" for Flutter
