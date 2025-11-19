@@ -22,6 +22,11 @@
         Manage Users
     </a>
 
+    <a href="view_attendees.php" class="d-flex align-items-center p-2 rounded <?= $currentPage === 'Users' ? 'bg-primary text-white' : 'text-dark' ?>">
+        <i class="fa-solid fa-users-gear me-2"></i>
+        View 
+    </a>
+
     <!-- Attendees Accordion -->
     <?php
     $attendeesSubmenu = [
