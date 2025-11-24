@@ -51,7 +51,8 @@ class User
 
     public function getUsers(){
 
-        $sql = "SELECT * FROM " . $this->table;
+        $sql = "SELECT users.id,users.role, users.username, users.firstname, users.middlename, users.lastname, areaTown.area_name FROM " . $this->table . "
+                INNER JOIN areaTown ON users.area_office = areaTown.id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -60,8 +61,8 @@ class User
 
     public function addUser($data){
 
-        $sql = "INSERT INTO " . $this->table . " (username, password, role, firstname, lastname, middlename, created_at, updated_at, status) 
-                VALUES (:username, :password, :role, :firstname, :lastname, :middlename, :created_at, :updated_at, :status)";
+        $sql = "INSERT INTO " . $this->table . " (username, password, role, firstname, lastname, middlename, created_at, updated_at, status, area_office) 
+                VALUES (:username, :password, :role, :firstname, :lastname, :middlename, :created_at, :updated_at, :status, :area_office)";
 
         $stmt = $this->db->prepare($sql);
 
@@ -74,7 +75,8 @@ class User
             ':middlename' => $data['middlename'],
             ':created_at' => $data['created_at'],
             ':updated_at' => $data['updated_at'],
-            ':status' => $data['status']
+            ':status' => $data['status'],
+            ':area_office' => $data['area_office']
         ]);
     
     }
@@ -96,6 +98,21 @@ class User
         $stmt->execute([':id' => $id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+public function getUserAreainfo($id){
+
+        $sql = "SELECT users.area_office, areaTown.area_name, areaTown.town_ids FROM " . $this->table . "
+                INNER JOIN areaTown ON users.area_office = areaTown.id WHERE users.id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+                ':id' => $id
+        ]);
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
 
     }
 

@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\AreaTownController;
 use App\Controllers\UsersController;
 $pagetitle = 'Users';
 
@@ -13,6 +14,9 @@ $userid = $_SESSION['data']['id'];
 
 
 $users = (new UsersController)->fetchAllUsers();
+
+$getAreas = ( new AreaTownController )->getAllAreas();
+
 
 ?>
 
@@ -35,7 +39,6 @@ $users = (new UsersController)->fetchAllUsers();
             <hr style="margin-bottom: 2rem; border-color: #BCC0C6FF;">
 
             <div class="row">
-
                 <!-- LEFT COLUMN (Form) -->
                 <div class="col-md-3">
                     <div class="card card-grid-form p-3">
@@ -67,6 +70,17 @@ $users = (new UsersController)->fetchAllUsers();
                                 <input type="text" class="inputs form-control" name="lastname" required>
                             </div>
 
+                             <div class="mt-3 mb-3">
+                           
+                                <label class="form-label">Area Assigned</label>
+                                <select class="form-select inputs" name="area_office" required>
+                                    <option hidden>--Select Area --</option>
+                                    <?php foreach($getAreas as $i => $area): ?>
+                                        <option value="<?= $area['id'] ?>"><?= $area['area_name'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
                             <div class="mt-3 mb-3">
                                 <label class="form-label">Role</label>
                                 <select class="form-select inputs" name="role" required>
@@ -94,6 +108,7 @@ $users = (new UsersController)->fetchAllUsers();
                                     <th>Username</th>
                                     <th >Full Name</th>
                                     <th>Role</th>
+                                    <th>Area Assigned</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -104,6 +119,9 @@ $users = (new UsersController)->fetchAllUsers();
                                     <td><?= htmlspecialchars($user['username']) ?></td>
                                     <td colspan="1"><?= htmlspecialchars($user['firstname'] . ' ' . $user['middlename'] . ' ' . $user['lastname']) ?></td>
                                     <td><?= htmlspecialchars($user['role']) ?></td>
+                                    <td>
+                                        <?= htmlspecialchars($user['area_name']) ?>
+                                    </td>
                                     <td style="text-align: center;">
                                         <button class="edit-button" data-toggle="modal" data-target="#viewModal" data-userid="<?= $user['id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
                                         <button class="delete-button btn-delete" data-userid="<?= $user['id'] ?>"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
@@ -112,10 +130,8 @@ $users = (new UsersController)->fetchAllUsers();
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

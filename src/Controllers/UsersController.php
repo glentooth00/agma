@@ -47,5 +47,9 @@ class UsersController
         return (new User)->deleteUser($id);
     }
 
+    public function getUserArea($id){
+        return (new User)->getUserAreainfo($id);
+    }
+
 
 }
