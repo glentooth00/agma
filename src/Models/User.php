@@ -101,10 +101,30 @@ class User
 
     }
 
-public function getUserAreainfo($id){
+    public function getUserAreainfo($id){
 
         $sql = "SELECT users.area_office, areaTown.area_name, areaTown.town_ids FROM " . $this->table . "
                 INNER JOIN areaTown ON users.area_office = areaTown.id WHERE users.id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+                ':id' => $id
+        ]);
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+
+    }
+
+    public function getAreaList($id){
+
+        $sql = "SELECT  
+                    areaTown.town_ids,
+                    areaTown.area_name
+                FROM " . $this->table . " 
+                INNER JOIN areaTown
+                ON users.area_office = areaTown.id 
+                WHERE users.id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
                 ':id' => $id

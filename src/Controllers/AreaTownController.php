@@ -11,7 +11,7 @@ class AreaTownController{
         $this->model = new AreaTown();
     }
 
-    public function saveAreaSetting($data){
+    public function saveAreaSetting($data): bool{
         return $this->model->save($data);
     }
 

@@ -51,5 +51,9 @@ class UsersController
         return (new User)->getUserAreainfo($id);
     }
 
+    public function getAreaListPerUser($id){
+        return (new User)->getAreaList($id);
+    }
+
 
 }

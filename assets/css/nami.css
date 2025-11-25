@@ -154,7 +154,8 @@
   overflow: hidden;
   text-align: center;
   color: #333;
-  padding: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .cardDash i {
