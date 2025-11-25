@@ -30,7 +30,7 @@
     <!-- Attendees Accordion -->
     <?php
     $attendeesSubmenu = [
-        ['title' => 'All Attendees', 'url' => 'attendees.php'],
+        ['title' => 'Attendees', 'url' => 'attendees.php'],
         ['title' => 'VIP Attendees', 'url' => 'vip_attendees.php'],
         ['title' => 'Guest List', 'url' => 'guest_list.php'],
     ];
@@ -48,7 +48,7 @@
                     style="font-weight:600;">
                <i class="fa fa-globe me-2" aria-hidden="true"></i>
 
-            Venue Attendees
+                    Venue Attendees
             </button>
         </h2>
         <div id="collapseAttendees" 
