@@ -18,8 +18,8 @@ class AttendeesController{
         $countAttendees = new Attendees();
 
         return $countAttendees->getAllAttendees();
-
     }
+
 
 
 

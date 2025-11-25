@@ -50,7 +50,7 @@ app-container {
 
     .sidebar a:hover,
     .sidebar a.active {
-        background-color: #f97316;
+        /* background-color: #f97316; */
     }
 
     .content {
