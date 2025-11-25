@@ -13,7 +13,8 @@ $data = [
     'middlename' => $_POST['middlename'],
     'created_at' => date('Y-m-d H:i:s'),
     'updated_at' => date('Y-m-d H:i:s'),
-    'status' => 'offline'
+    'status' => 'offline',
+    'area_office' => $_POST['area_office']
 ];
 
 $saveUser = (new UsersController)->createUser($data);
