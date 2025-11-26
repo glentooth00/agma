@@ -23,7 +23,7 @@ $userid = $_SESSION['data']['id'];
         <?php include_once __DIR__ . '../../components/menu/sidebar.php'; ?>
 
         <div class="content">
-            <h3>Users</h3>
+            <h3>Attendees</h3>
             <hr style="margin-bottom: 2rem; border-color: #BCC0C6FF;">
 
             <div class="card-grid">

@@ -41,4 +41,14 @@ class AreaTown {
 
     }
 
+    public function delete($id){
+        $sql = "DELETE FROM " . $this->table . " WHERE id = :id ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            'id' => $id
+        ]);
+
+        return $this;
+    }
+
 }

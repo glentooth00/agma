@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Area;
+use App\Models\Attendees;
 
 class AreaController{
 
@@ -117,6 +118,10 @@ class AreaController{
 
         return $countArea->countAnilaoAttendees();
 
+    }
+
+    public function getAttendees($id){
+        return (new Attendees )->getAllAttendeesPerArea($id);
     }
 
 
