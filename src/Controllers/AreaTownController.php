@@ -19,6 +19,10 @@ class AreaTownController{
         return $this->model->getAreas();
     }
 
+    public function deleteArea($id){
+        return $this->model->delete($id);
+    }
+
 
 
 }
