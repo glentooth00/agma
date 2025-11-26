@@ -1,7 +1,9 @@
 <?php 
 require_once '../../vendor/autoload.php';
+use App\Controllers\AreaTownController;
 use App\Controllers\TownsController;
 $towns =  ( new TownsController )->getTowns();
+$getAreas =  ( new AreaTownController )->getAllAreas();
 ?>
 
 
@@ -82,15 +84,19 @@ $towns =  ( new TownsController )->getTowns();
                                     <table id="table" class="table table-bordered table-striped">
                                         <thead>
                                             <th>Area Office</th>
-                                            <th>Town Coverage</th>
+                                            <th>Town Routes</th>
                                             <th>Action</th>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="here">
+                                            <?php foreach ($getAreas as $areas) : ?>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?= $areas['area_name'] ?></td>
+                                                <td><?= $areas['town_ids'] ?></td>
+                                                <td>
+                                                    <button class="delete-button btn btn-danger btn-sm" data-id=<?= $areas['id'] ?> >Delete</button>
+                                                </td>
                                             </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -267,12 +273,12 @@ $(document).ready(function() {
             success: function(response) {
                 alert("Area Setting Saved");
 
-                // Reset the whole form
+                // Reset the form
                 $('#setAreadata')[0].reset(); 
+                $("#mySelect2").val(null).trigger('change');
 
-                // Reset Select2
-                $("#mySelect2").val(null).trigger('change'); //
-
+                // 🔥 RELOAD TABLE AFTER SAVE
+                loadAreas();
             },
             error:function(xhr, status, error){
                 console.log('Error:', status, error);
@@ -281,5 +287,56 @@ $(document).ready(function() {
     });
 });
 
+
+//get data from php api
+function loadAreas() {
+    $.ajax({
+        type: 'GET',
+        url: 'functions/getAreas.php',
+        dataType: "json",
+        success: function(data){
+            let html = "";
+
+            data.forEach(row => {
+                html += `
+                    <tr>
+                        <td>${row.area_name}</td>
+                        <td>${row.town_ids}</td>
+                        <td><button class="delete-button btn btn-danger btn-sm" data-id=${row.id} >Delete </button></td>
+                    </tr>
+                `;
+            });
+
+            $("#here").html(html);
+        }
+    });
+}
+
+$(document).ready(function () {
+    loadAreas(); // initial load
+});
+
+
+$(document).on('click', '.delete-button', function () {
+    var id = $(this).data('id');
+
+    if (confirm("Are you sure you want to delete this record?")) {
+        $.ajax({
+            url: 'functions/delete_area.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: id },
+            success: function (response) {
+                if (response.success) {
+                    // Reload table from server
+                    loadAreas();
+                    alert("Area Deleted!");
+                } else {
+                    alert("Error deleting record: " + response.message);
+                }
+            }
+        });
+    }
+});
 
 </script>
