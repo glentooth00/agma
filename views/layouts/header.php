@@ -48,6 +48,19 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link rel="stylesheet" type="text/css" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/nami.css">
     <link rel="stylesheet" type="text/css" href="assets/css/registration.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/elements.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/popups.css">
+     <link rel="stylesheet" type="text/css" href="../../assets/css/modals.css">
+
+     <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 
     <!------ Google fonts -------->
@@ -56,6 +69,12 @@ $logoPath = file_exists('../../assets/images/logo.png')
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
         rel="stylesheet">
+
+    <!--- select 2 elements ---->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <style>
         .dm-sans-error {

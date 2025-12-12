@@ -23,39 +23,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                 </thead>
                 <tbody>';
 
-        foreach ($results as $row) {
-            $id = htmlspecialchars($row['ConsumerId'] ?? '');
-            $name = htmlspecialchars($row['Name'] ?? '');
-            $address = htmlspecialchars($row['Address'] ?? '');
-            $memberOr = htmlspecialchars($row['member_or'] ?? '');
-            $accountNo = $row['TownCode'] . '-' . $row['TownCode'] . '' . $row['RouteCode'] . '-' . $row['AcctCode'];
+foreach ($results as $row) {
+    $name      = htmlspecialchars($row['fullname'] ?? '');
+    $address   = htmlspecialchars($row['address'] ?? '');
+    $memberOr  = htmlspecialchars($row['member_or'] ?? '');
+    $accountNo = htmlspecialchars($row['c_id'] ?? '');
 
-            echo '<tr>
-                <td>' . $name . '</td>
-                <td style="text-align:center;">' . $accountNo . '</td>
-                <td style="text-align:center;">' . $address . '</td>
-                <td>' . $memberOr . '</td>
-                <td style="text-align:center;">
-                    <div style="display: flex; gap: 5px; justify-content: center;">
-                        <button
-                            id="ViewBtn"
-                            class="btn btn-sm btn-primary"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasExample"
-                            aria-controls="offcanvasExample"
-                            data-id="' . $id . '"
-                            data-name="' . $name . '"
-                            data-account="' . $accountNo . '"
-                            data-address="' . $address . '"
-                            
-                        >
-                            View
-                        </button>
-                        <button id="deleteBtn" class="btn btn-sm btn-danger" data-id="' . $id . '" onclick="deletePopup(this)">Delete</button>
-                    </div>
-                </td>
-            </tr>';
-        }
+    echo '<tr>
+        <td>' . $name . '</td>
+        <td style="text-align:center;">' . $accountNo . '</td>
+        <td style="text-align:center;">' . $address . '</td>
+        <td style="text-align:center;">' . $memberOr . '</td>
+        <td style="text-align:center;">
+            <div style="display: flex; gap: 5px; justify-content: center;">
+                <button
+                    id="ViewBtn"
+                    class="btn btn-sm btn-primary"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasExample"
+                    aria-controls="offcanvasExample"
+                    data-id="' . $accountNo . '"
+                    data-name="' . $name . '"
+                    data-account="' . $accountNo . '"
+                    data-address="' . $address . '"
+                >
+                    View
+                </button>
+                <button id="deleteBtn" class="btn btn-sm btn-danger" data-id="' . $accountNo . '" onclick="deletePopup(this)">Delete</button>
+            </div>
+        </td>
+    </tr>';
+}
+
 
         echo '</tbody></table>';
     } else {
@@ -69,3 +68,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
 } else {
     echo '<p>Invalid request.</p>';
 }
+
+// data-townCode="' . $townCode . '" <td>' . $memberOr . '</td>

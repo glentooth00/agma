@@ -1,34 +1,45 @@
 <?php
 // Load database config
 $config = require_once 'database.php';
-
+error_reporting(0);
+use \PDO;
 // Get the default database type
 $default = $config['default'];
 $dbConfig = $config['connections'][$default];
 
 $pdo = null;
-$mysqli = null;
 
-if ($dbConfig['driver'] === 'mysqli') {
-    // MySQLi Connection
-    $mysqli = new mysqli($dbConfig['host'], $dbConfig['username'], $dbConfig['password'], $dbConfig['database']);
+try {
+    if ($dbConfig['driver'] === 'mysql' || $dbConfig['driver'] === 'mysqli') {
+        // Use PDO for MySQL
+        $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['database']};charset=utf8";
 
-    if ($mysqli->connect_error) {
-        die("MySQL Connection failed: " . $mysqli->connect_error);
+        $pdo = new PDO($dsn, $dbConfig['username'], $dbConfig['password'], [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ]);
+
+        // echo "Connected to MySQL successfully!";
+        
+    } elseif ($dbConfig['driver'] === 'sqlsrv') {
+
+        // SQL Server (PDO)
+        $dsn = "sqlsrv:Server={$dbConfig['server']};Database={$dbConfig['database']}";
+
+        $pdo = new PDO($dsn, $dbConfig['username'], $dbConfig['password'], [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+
+        // echo "Connected to SQL Server successfully!";
+        
+    } else {
+        exit("Invalid database configuration.");
     }
-
-    echo "Connected to MySQL successfully!";
-} elseif ($dbConfig['driver'] === 'sqlsrv') {
-    // SQL Server Connection (Using PDO)
-    $dsn = "sqlsrv:Server={$dbConfig['server']};Database={$dbConfig['database']}";
-
-    try {
-        $pdo = new PDO($dsn, $dbConfig['username'], $dbConfig['password']);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connected to SQL Server successfully!";
-    } catch (PDOException $e) {
-        die("SQL Server Connection failed: " . $e->getMessage());
-    }
-} else {
-    die("Invalid database configuration.");
+} catch (PDOException $e) {
+    exit("Database connection failed: " . $e->getMessage());
 }
+
+// Return PDO instance
+return $pdo;

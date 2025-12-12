@@ -28,7 +28,7 @@ class MembersController
     public function searchMember($search)
     {
         $model = new Members();
-        return $model->searchMember($search);
+        return $model->hasSpecialChars($search);
     }
 
 }

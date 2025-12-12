@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'default' => 'sqlsrv', // Change to 'sqlsrv' or 'mysql' for SQL Server
+    'default' => 'mysqli', // Change to 'sqlsrv' or 'mysql' for SQL Server
 
     'connections' => [
-        'mysql' => [
+        'mysqli' => [
             'driver' => 'mysqli',
             'host' => '127.0.0.1',
-            'database' => 'contract_db',
-            'username' => 'phpuser',
-            'password' => 'php1234',
+            'database' => 'usi_customerdb',
+            'username' => 'root',
+            'password' => 'root',
         ],
         'sqlsrv' => [
             'driver' => 'sqlsrv',

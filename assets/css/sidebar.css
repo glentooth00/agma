@@ -23,12 +23,12 @@ a{
     color: rgb(45, 44, 44);
 }
 a:hover{
-     color: black;
+     color: rgb(255, 255, 255);
      text-decoration: none;
      /* background-color: #FFB22C; */
 }
 ul li:hover{
-    background-color: #F3C623;
+    /* background-color: #F3C623; */
     color: white;
     cursor: pointer;
 }
