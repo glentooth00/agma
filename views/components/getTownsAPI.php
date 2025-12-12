@@ -7,6 +7,7 @@ $towns = (new TownsController)->getTowns($search);
 
 // filter towns by search term
 $results = array_filter($towns, function($town) use ($search) {
+    
     return stripos($town['TownName'], $search) !== false;
 });
 

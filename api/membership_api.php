@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: text/plain"); // Use plain text for Flutter popup
+header("Content-Type: text/plain");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
@@ -8,45 +8,42 @@ header("Access-Control-Allow-Methods: POST");
 $data = json_decode(file_get_contents("php://input"), true);
 
 $account_no = $data["account_no"] ?? '';
+$getTownCode = substr($account_no, 0, 2);
 $consumer_name = $data["consumer_name"] ?? '';
 $address = $data["address"] ?? '';
-$or_number = $data["or_number"] ?? '';
-$townCode = $data["townCode"]
-         ?? $data["towncode"]
-         ?? $data["town_code"]
-         ?? '';
-
+$or_number = $data["or_number"] ?? null;   // allow null
+$townCode =  $getTownCode ?? null; // allow null
 
 if (empty($account_no) || empty($consumer_name)) {
-    echo "Missing account number or consumer name";
+    echo "Missing account number or consumer name"; // specific error
     exit;
 }
 
-// SQL Server connection
-$serverName = "192.168.4.67";
-$database = "ILECO3";
-$username = ""; // fill if needed
-$password = "";
+$serverName = "127.0.0.1";
+$database = "usi_customerdb";
+$username = "root";
+$password = "root";
 
 try {
-    $conn = new PDO("sqlsrv:server=$serverName;Database=$database", $username, $password);
+    $conn = new PDO("mysql:host=$serverName;dbname=$database;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Check if account_no already exists
-    $checkStmt = $conn->prepare("SELECT COUNT(*) as count FROM ScannedQRData WHERE account_no = :account_no");
+    // Check duplicate
+    $checkStmt = $conn->prepare("SELECT COUNT(*) as count FROM scannedqrdata WHERE account_no = :account_no");
     $checkStmt->execute([":account_no" => $account_no]);
     $result = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['count'] > 0) {
-        // Duplicate found
-        echo "duplicate"; // <-- Plain text "duplicate" so Flutter can detect it
+        echo "Duplicate account number"; // specific error
         exit;
     }
 
-    // Insert new record
+    // Insert record
     $stmt = $conn->prepare("
-        INSERT INTO ScannedQRData (account_no, consumer_name, address, or_number, townCode, created_at, updated_at)
-        VALUES (:account_no, :consumer_name, :address, :or_number, :townCode, GETDATE(), GETDATE())
+        INSERT INTO scannedqrdata 
+        (account_no, consumer_name, address, or_number, townCode, created_at, updated_at)
+        VALUES 
+        (:account_no, :consumer_name, :address, :or_number, :townCode, NOW(), NOW())
     ");
 
     $stmt->execute([
@@ -57,8 +54,9 @@ try {
         ":townCode" => $townCode
     ]);
 
-    echo "success"; // <-- Plain text "success" for Flutter
+    echo "success";
 
 } catch (PDOException $e) {
-    echo "error"; // <-- Plain text "error" for Flutter
+    // Return the PDO error message for debugging
+    echo "Database error: " . $e->getMessage();
 }

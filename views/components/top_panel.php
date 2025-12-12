@@ -9,7 +9,7 @@ $getAreas =  ( new AreaTownController )->getAllAreas();
 
 
 <div id="topPanel">
-    <span>AGMA Management App</span>
+    <span>ILECO III AGMA Management App</span>
     <div class="dropdown">
         <i class="fa-solid fa-gear" id="gearIcon"></i>
         <div class="dropdown-menu">
@@ -93,7 +93,7 @@ $getAreas =  ( new AreaTownController )->getAllAreas();
                                                 <td><?= $areas['area_name'] ?></td>
                                                 <td><?= $areas['town_ids'] ?></td>
                                                 <td>
-                                                    <button class="delete-button btn btn-danger btn-sm" data-id=<?= $areas['id'] ?> >Delete</button>
+                                                    <button class="delete-btn btn btn-danger btn-sm" data-id=<?= $areas['id'] ?> >Delete</button>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>
@@ -302,7 +302,7 @@ function loadAreas() {
                     <tr>
                         <td>${row.area_name}</td>
                         <td>${row.town_ids}</td>
-                        <td><button class="delete-button btn btn-danger btn-sm" data-id=${row.id} >Delete </button></td>
+                        <td><button class="delete-btn btn btn-danger btn-sm" data-id=${row.id} >Delete </button></td>
                     </tr>
                 `;
             });
@@ -317,7 +317,7 @@ $(document).ready(function () {
 });
 
 
-$(document).on('click', '.delete-button', function () {
+$(document).on('click', '.delete-btn', function () {
     var id = $(this).data('id');
 
     if (confirm("Are you sure you want to delete this record?")) {
