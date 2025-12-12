@@ -8,7 +8,7 @@ use PDO;
 class Attendees{
     private $db;
 
-    private $table = "ScannedQRData";
+    private $table = "scannedqrdata";
 
     public function __construct()
     {
@@ -55,6 +55,14 @@ class Attendees{
 
         return $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    }
+
+    public function getAttendees(){
+        $sql = "SELECT * FROM " . $this->table;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

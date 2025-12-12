@@ -18,16 +18,28 @@ class User
         $this->db = Database::connect();
     }
 
-    public function getByUsername($data)
-    {
-        $username = $data['username'];
-        $password = $data['password'];
+public function getByUsername($data)
+{
+    $username = $data['username'];
+    $password = $data['password'];
 
-        $stmt = $this->db->prepare("SELECT * FROM " . $this->table . " WHERE username = ? AND password = ?");
-        $stmt->execute([$username, $password]);
+    // If your DB stores MD5 passwords, hash it:
+    // $password = md5($password);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC); // returns a single row or false
-    }
+    $stmt = $this->db->prepare("
+        SELECT * FROM {$this->table}
+        WHERE username = :username AND password = :password
+        LIMIT 1
+    ");
+
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password);
+
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
     public function updateStatus($data)
     {
