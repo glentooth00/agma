@@ -20,6 +20,12 @@ class AttendeesController{
         return $countAttendees->getAllAttendees();
     }
 
+    public function raffle(){
+         $countAttendees = new Attendees();
+
+        return $countAttendees->getAttendees();
+    }
+
 
 
 

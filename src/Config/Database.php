@@ -3,7 +3,6 @@
 namespace App\Config;
 
 use PDO;
-use mysqli;
 use PDOException;
 
 class Database
@@ -13,30 +12,51 @@ class Database
     public static function connect()
     {
         if (self::$connection === null) {
+
             $config = require __DIR__ . '/../../config/database.php';
             $default = $config['default'];
             $dbConfig = $config['connections'][$default];
 
-            if ($dbConfig['driver'] === 'mysqli') {
-                self::$connection = new mysqli($dbConfig['host'], $dbConfig['username'], $dbConfig['password'], $dbConfig['database']);
-                if (self::$connection->connect_error) {
-                    die("MySQL Connection failed: " . self::$connection->connect_error);
+            try {
+
+                // ---------------------------
+                // MYSQL via PDO
+                // ---------------------------
+                if ($dbConfig['driver'] === 'mysql' || $dbConfig['driver'] === 'mysqli') {
+
+                    $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['database']};charset=utf8";
+
+                    self::$connection = new PDO($dsn, $dbConfig['username'], $dbConfig['password'], [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES => false
+                    ]);
                 }
-            } elseif ($dbConfig['driver'] === 'sqlsrv') {
-                $dsn = "sqlsrv:Server={$dbConfig['server']};Database={$dbConfig['database']}";
-                try {
-                    self::$connection = new PDO($dsn, $dbConfig['username'], $dbConfig['password']);
-                    self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                } catch (PDOException $e) {
-                    die("SQL Server Connection failed: " . $e->getMessage());
+
+                // ---------------------------
+                // SQL SERVER via PDO
+                // ---------------------------
+                elseif ($dbConfig['driver'] === 'sqlsrv') {
+
+                    $dsn = "sqlsrv:Server={$dbConfig['server']};Database={$dbConfig['database']}";
+
+                    self::$connection = new PDO($dsn, $dbConfig['username'], $dbConfig['password'], [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    ]);
                 }
-            } else {
-                die("Invalid database configuration.");
+
+                else {
+                    die("Invalid database configuration.");
+                }
+
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
             }
         }
+
         return self::$connection;
     }
 }
 
-
-// $test = (new Database)->connect();
+// $test = Database::connect();

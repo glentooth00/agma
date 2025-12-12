@@ -11,7 +11,7 @@ class Members
     private $stmt;
     private $query;
 
-    private $table = "consumer";
+    private $table = "customer_details";
 
     public function __construct()
     {
@@ -41,14 +41,14 @@ class Members
 
     public function getAll($limit = 100, $offset = 0)
     {
-        $sql = "SELECT * FROM {$this->table} ORDER BY ConsumerID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(1, $offset, PDO::PARAM_INT);
-        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+        $stmt = $this->db->prepare("SELECT * FROM {$this->table} ORDER BY c_id LIMIT ? OFFSET ?");
+        $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+        $stmt->bindValue(2, $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
 
     public function countAll()
@@ -78,42 +78,47 @@ class Members
     }
 
     //search using name, Account number and Meter Number
-    public function searchMember($search)
-    {
-        try {
-            $sql = "SELECT 
-                        C.*,
-                        M.*,
-                        -- Format: 11-1121-0080
-                        (CAST(C.TownCode AS VARCHAR) + '-' +
-                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
-                        CAST(C.AcctCode AS VARCHAR)) AS AccountNumber
-                    FROM Consumer C
-                    INNER JOIN Meter M ON C.ConsumerID = M.ConsumerID
-                    WHERE 
-                        -- Match against formatted Account Number
-                        (CAST(C.TownCode AS VARCHAR) + '-' + 
-                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
-                        CAST(C.AcctCode AS VARCHAR)) LIKE :account_number
-                        OR C.Name LIKE :name
-                        OR M.MeterSN = :meter_sn";
+public function searchMember($search)
+{
+    try {
+        $sql = "SELECT 
+                    C.*,
+                    M.*,
+                    -- Format: 11-1121-0080
+                    CONCAT(
+                        CAST(C.TownCode AS CHAR), '-', 
+                        CAST(C.TownCode AS CHAR), CAST(C.RouteCode AS CHAR), '-', 
+                        CAST(C.AcctCode AS CHAR)
+                    ) AS AccountNumber
+                FROM customer C
+                INNER JOIN Meter M ON C.ConsumerID = M.ConsumerID
+                WHERE 
+                    -- Match against formatted Account Number
+                    CONCAT(
+                        CAST(C.TownCode AS CHAR), '-', 
+                        CAST(C.TownCode AS CHAR), CAST(C.RouteCode AS CHAR), '-', 
+                        CAST(C.AcctCode AS CHAR)
+                    ) LIKE :account_number
+                    OR C.Name LIKE :name
+                    OR M.MeterSN = :meter_sn";
 
-            $stmt = $this->db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
-            $likeSearch = '%' . $search . '%';
+        $likeSearch = '%' . $search . '%';
 
-            $stmt->bindValue(':account_number', $likeSearch, PDO::PARAM_STR);
-            $stmt->bindValue(':name', $likeSearch, PDO::PARAM_STR);
-            $stmt->bindValue(':meter_sn', $search, PDO::PARAM_STR); // exact match
+        $stmt->bindValue(':account_number', $likeSearch, PDO::PARAM_STR);
+        $stmt->bindValue(':name', $likeSearch, PDO::PARAM_STR);
+        $stmt->bindValue(':meter_sn', $search, PDO::PARAM_STR); // exact match
 
-            $stmt->execute();
+        $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        } catch (\PDOException $e) {
-            die("Database error: " . $e->getMessage());
-        }
+    } catch (\PDOException $e) {
+        die("Database error: " . $e->getMessage());
     }
+}
+
 
 
     public function getAllAttendees(){
@@ -125,6 +130,26 @@ class Members
     }
 
 
+    public function hasSpecialChars($search) {
+        
+        if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $search)){
+
+            $account_no = $search;
+            $member_name = preg_replace('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $search);
+
+            $sql = "SELECT * FROM " . $this->table . " WHERE c_id LIKE :account_no OR fullname LIKE :name";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':account_no', '%' . $account_no . '%', PDO::PARAM_STR);
+            $stmt->bindValue(':name', '%' . $member_name . '%',  PDO::PARAM_STR);
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $results;
+        
+        } 
+
+    }
 
 
 

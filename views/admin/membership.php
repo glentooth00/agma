@@ -321,8 +321,15 @@ $userid = $_SESSION['data']['id'];
         display: flex;
     }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
+    // ================================
+    // SEARCH + DATATABLE
+    // ================================
     document.querySelector('.search-form').addEventListener('submit', function (e) {
+
         e.preventDefault();
 
         const form = this;
@@ -336,12 +343,10 @@ $userid = $_SESSION['data']['id'];
             .then(data => {
                 document.getElementById('resultDiv').innerHTML = data;
 
-                // Destroy old DataTable instance if any
                 if ($.fn.DataTable.isDataTable('#searchTable')) {
                     $('#searchTable').DataTable().destroy();
                 }
 
-                // Initialize new DataTable
                 $('#searchTable').DataTable({
                     paging: true,
                     searching: true,
@@ -352,80 +357,85 @@ $userid = $_SESSION['data']['id'];
                 });
             })
             .catch(error => {
-                document.getElementById('resultDiv').innerHTML = '<p style="color:red;">Search failed. Please try again.</p>';
+                document.getElementById('resultDiv').innerHTML =
+                    '<p style="color:red;">Search failed. Please try again.</p>';
                 console.error(error);
             });
     });
 
 
-    //pass to pffcanva
+    // ============================================
+    // SINGLE Offcanvas Listener + QR Code Generator
+    // ============================================
+    document.addEventListener("DOMContentLoaded", function () {
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const offcanvasEl = document.getElementById('offcanvasExample');
+        const offcanvas = document.getElementById("offcanvasExample");
 
-        offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
+        offcanvas.addEventListener("show.bs.offcanvas", function (event) {
+
             const button = event.relatedTarget;
 
-            document.getElementById('offcanvasName').innerText = button.getAttribute('data-name') || '';
-            document.getElementById('offcanvasAccount').innerText = button.getAttribute('data-account') || '';
-            document.getElementById('offcanvasAddress').innerText = button.getAttribute('data-address') || '';
-            document.getElementById('offcanvasOR').innerText = button.getAttribute('data-or') || '';
-        });
-    });
+            const name = button.getAttribute("data-name") || "";
+            const account = button.getAttribute("data-account") || "";
+            const address = button.getAttribute("data-address") || "";
+            const orNo = button.getAttribute("data-or") || "";
+            const townCode = button.getAttribute("data-towncode") || "";
 
+            // Fill text values
+            document.getElementById("offcanvasName").textContent = name;
+            document.getElementById("offcanvasAccount").textContent = account;
+            document.getElementById("offcanvasAddress").textContent = address;
+            document.getElementById("offcanvasOR").textContent = orNo;
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const offcanvasEl = document.getElementById('offcanvasExample');
+            // Generate QR text
+            const qrText =
+                `Name: ${name}\n` +
+                `Account #: ${account}\n` +
+                `Address: ${address}\n` +
+                `OR: ${orNo}\n` +
+                `Town Code: ${townCode}`;
 
-        offcanvasEl.addEventListener('show.bs.offcanvas', function (event) {
-            const button = event.relatedTarget;
+            // Generate QR Code
+            const qrDiv = document.getElementById("offcanvasQR");
+            qrDiv.innerHTML = ""; // Clear old QR
 
-            const name = button.getAttribute('data-name') || '';
-            const account = button.getAttribute('data-account') || '';
-            const address = button.getAttribute('data-address') || '';
-            const orNumber = button.getAttribute('data-or') || '';
-            const townCode = button.getAttribute('data-towncode') || '';
-
-
-            // Fill offcanvas text
-            document.getElementById('offcanvasName').innerText = name;
-            document.getElementById('offcanvasAccount').innerText = account;
-            document.getElementById('offcanvasAddress').innerText = address;
-            document.getElementById('offcanvasOR').innerText = orNumber;
-            // document.getElementById('offcanvasTowncode').innerText = townCode;
-
-
-            // Generate QR code
-            const qrContainer = document.getElementById('offcanvasQR');
-            qrContainer.innerHTML = ''; // Clear previous QR code
-
-            const qrText = `Name: ${name}\nAccount #: ${account}\nAddress: ${address}\nOR: ${orNumber}\nTown Code: ${townCode}`;
-            new QRCode(qrContainer, {
+            new QRCode(qrDiv, {
                 text: qrText,
-                width: 208,
-                height: 208,
+                width: 220,
+                height: 220
             });
         });
+
     });
 
 
+
+    // ============================================
+    // JQUERY SEARCH (MEMBERS)
+    // ============================================
     $(document).ready(function () {
+
         $('#searchForm').on('submit', function (e) {
             e.preventDefault();
+
             const searchValue = $('#searchInput').val();
 
-            // Show loading overlay
+            let first = searchValue.substring(0, 2);
+            let second = searchValue.substring(2, 6);
+            let third = searchValue.substring(6);
+
+            const accountNumber = first + "-" + second + "-" + third;
+
             $('#loadingOverlay').fadeIn(200);
 
             $.ajax({
                 url: 'functions/search.php',
                 method: 'POST',
-                data: { member_data: searchValue },
+                data: { member_data: accountNumber },
                 success: function (response) {
-                    // Inject the new table
+
                     $('#searchResults').html(response);
 
-                    // Reinitialize DataTable AFTER table is loaded
                     if ($.fn.DataTable.isDataTable('#searchTable')) {
                         $('#searchTable').DataTable().destroy();
                     }
@@ -443,13 +453,10 @@ $userid = $_SESSION['data']['id'];
                     alert('An error occurred while fetching data.');
                 },
                 complete: function () {
-                    // Hide loading overlay
                     $('#loadingOverlay').fadeOut(200);
                 }
             });
         });
     });
-
-
 
 </script>

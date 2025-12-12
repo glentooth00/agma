@@ -4,7 +4,7 @@ include_once __DIR__ . '/../../vendor/autoload.php';
 use App\Controllers\UsersController;
 
 session_start();
-
+error_reporting();
 date_default_timezone_set("Asia/Manila");
 
 $login = (new UsersController)->authenticate(
@@ -46,11 +46,11 @@ if ($login == true) {
 
 } else {
 
-    $_SESSION['notification'] = [
-        'message' => 'Incorrect username or password',
-        'type' => 'warning'
-    ];
+    // $_SESSION['notification'] = [
+    //     'message' => 'Incorrect username or password',
+    //     'type' => 'warning'
+    // ];
 
-    header('location:' . $_SERVER['HTTP_REFERER']);
+    // header('location:' . $_SERVER['HTTP_REFERER']);
 
 }
