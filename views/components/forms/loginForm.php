@@ -3,7 +3,7 @@
     <div class="LoginForm p-2">
         <form action="views/scripts/login.php" method="post">
             <div class="p-2">
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
             </div>
             <div class="p-2 mb-2 position-relative">
                 <input type="password" class="form-control" name="password" id="passwordField" placeholder="Password"

@@ -78,46 +78,10 @@ class Members
     }
 
     //search using name, Account number and Meter Number
-public function searchMember($search)
-{
-    try {
-        $sql = "SELECT 
-                    C.*,
-                    M.*,
-                    -- Format: 11-1121-0080
-                    CONCAT(
-                        CAST(C.TownCode AS CHAR), '-', 
-                        CAST(C.TownCode AS CHAR), CAST(C.RouteCode AS CHAR), '-', 
-                        CAST(C.AcctCode AS CHAR)
-                    ) AS AccountNumber
-                FROM customer C
-                INNER JOIN Meter M ON C.ConsumerID = M.ConsumerID
-                WHERE 
-                    -- Match against formatted Account Number
-                    CONCAT(
-                        CAST(C.TownCode AS CHAR), '-', 
-                        CAST(C.TownCode AS CHAR), CAST(C.RouteCode AS CHAR), '-', 
-                        CAST(C.AcctCode AS CHAR)
-                    ) LIKE :account_number
-                    OR C.Name LIKE :name
-                    OR M.MeterSN = :meter_sn";
-
-        $stmt = $this->db->prepare($sql);
-
-        $likeSearch = '%' . $search . '%';
-
-        $stmt->bindValue(':account_number', $likeSearch, PDO::PARAM_STR);
-        $stmt->bindValue(':name', $likeSearch, PDO::PARAM_STR);
-        $stmt->bindValue(':meter_sn', $search, PDO::PARAM_STR); // exact match
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    } catch (\PDOException $e) {
-        die("Database error: " . $e->getMessage());
+    public function searchMember($search)
+    {
+        var_dump($search);
     }
-}
 
 
 
@@ -130,28 +94,70 @@ public function searchMember($search)
     }
 
 
+    // search via name, account number and meter number with special characters 
     public function hasSpecialChars($search) {
         
-        if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $search)){
+        if( preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $search )){
 
             $account_no = $search;
-            $member_name = preg_replace('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $search);
+            $member_name = preg_replace( '/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $search );
+            $meterNumber = str_replace("-", "", $search );
 
-            $sql = "SELECT * FROM " . $this->table . " WHERE c_id LIKE :account_no OR fullname LIKE :name";
+            $sql = "SELECT 
+                    * FROM 
+                        " . $this->table . 
+                    "WHERE 
+                        c_id 
+                    LIKE 
+                        :account_no 
+                    OR 
+                        fullname 
+                    LIKE 
+                        :name 
+                    OR 
+                        ced_meternumber 
+                    LIKE 
+                        :ced_meternumber";
+                        
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':account_no', '%' . $account_no . '%', PDO::PARAM_STR);
             $stmt->bindValue(':name', '%' . $member_name . '%',  PDO::PARAM_STR);
+            $stmt->bindValue(':ced_meternumber', '%' .$meterNumber . '%', PDO::PARAM_STR);
             $stmt->execute();
 
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $results;
         
-        } 
+        }
+
+        return $results;
 
     }
 
 
+    public function getConsumerDetails($data){
+        
+        $member_name = preg_replace( '/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $data );
+        $meterNumber = str_replace("-", "", $data );
+
+        $townCode =  substr($data, 0, 2);
+        $routeCode = substr($data, 2, 4);
+        $accountCode =  substr($data, 6, 8);
+
+        $account_no = $townCode . '-' . $routeCode . '-' . $accountCode;
+
+        $sql = "
+                SELECT * FROM 
+                    " . $this->table . " 
+                WHERE 
+                    c_id LIKE :account_no
+            ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':account_no', '%' . $account_no . '%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
+    }
 }
