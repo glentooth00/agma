@@ -31,4 +31,10 @@ class MembersController
         return $model->hasSpecialChars($search);
     }
 
+    public function getConsumerDetails($data)
+    {
+        $model = new Members();
+        return $model->getConsumerDetails($data);
+    }
+
 }

@@ -19,24 +19,25 @@ include_once __DIR__ . '/vendor/autoload.php';
         <h5 class="text-muted">Find your account</h5>
         <form action="registration.php" method="post">
             <div class="search-wrapper">
-                <input id="search" type="text" name="member_data"value="<?= $member_data ?>"
+                <input id="search" type="text" name="member_data" value="<?= $member_data ?>"
                     placeholder="search your Account Number, Meter Number or Fullname" required>
                 <button type="submit">
                     <i class="fa fa-magnifying-glass"></i>
                 </button>
             </div>
         </form>
-        <label id="sample" class="badge mt-1" style="color: #758694 ;">Example : Account No. (11-1111-1111) / Meter No.
-            (11-1111-1111)</label>
+        <label id="sample" class="badge mt-1" style="color: #FF3939FF ;">Example : Account No. (12-3456-7890) / Meter No.
+            (123456/1234567789)</label>
         <hr>
     </div>
     <div class="resultDiv">
+
         <?php
         $members = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = $_POST['member_data'];
-            $members = (new MembersController)->searchMember($data);
+            $members = (new MembersController)->getConsumerDetails($data);
 
             // var_dump($members);
         }
@@ -56,20 +57,20 @@ include_once __DIR__ . '/vendor/autoload.php';
                             <tr>
                                 <td>
                                     <?php 
-                                        $routeCode = $member['TownCode'].$member['RouteCode'];
-                                        $accountNo = $member['TownCode'].'-'. $routeCode.'-'.$member['AcctCode'];
-                                        $address = $member['Address'];
+                                       $account_no = $member['c_id'];
                                     ?>
                                     <a href="#" class="passData"
-                                        data-id="<?= $member['ConsumerID'] ?>"
-                                        data-name="<?= $member['Name'] ?>"
-                                        data-accountNum="<?= $accountNo ?>"
-                                        data-address="<?= $address ?>"
-                                        data-meterNumber="<?= $member['MeterSN'] ?>">
-                                        <?= $member['Name'] ?>
+                                        data-id="<?= $member['c_id'] ?>"
+                                        data-name="<?= $member['fullname'] ?>"
+                                        data-accountNum="<?= $account_no ?>"
+                                        data-address="<?= $member['complete_address'] ?>"
+                                        data-meterNumber="<?= $member['ced_meternumber'] ?>">
+                                        <?= $member['fullname'] ?>
                                     </a>
                                 </td>
-                                <td id="accountNo"><?= $member['TownCode'] ?>-<?= $member['TownCode'] ?><?= $member['RouteCode'] ?>-<?= $member['AcctCode'] ?></td>
+                                <td id="accountNo">
+                                    <?= $account_no = $member['c_id']; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -128,7 +129,7 @@ include_once __DIR__ . '/vendor/autoload.php';
         
         <div class="mb-2">
             <div class="mb-2">
-                <label class="badge text-muted">Member Name <span id="required">*</span></label>
+                <label class="badge text-muted">Contact # <span id="required">*</span></label>
                 <input type="text" name="member_name" id="memberName" required>
             </div>
             <div class="mb-2">
