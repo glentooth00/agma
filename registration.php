@@ -19,24 +19,25 @@ include_once __DIR__ . '/vendor/autoload.php';
         <h5 class="text-muted">Find your account</h5>
         <form action="registration.php" method="post">
             <div class="search-wrapper">
-                <input id="search" type="text" name="member_data"value="<?= $member_data ?>"
+                <input id="search" type="text" name="member_data" value="<?= $member_data ?>"
                     placeholder="search your Account Number, Meter Number or Fullname" required>
                 <button type="submit">
                     <i class="fa fa-magnifying-glass"></i>
                 </button>
             </div>
         </form>
-        <label id="sample" class="badge mt-1" style="color: #758694 ;">Example : Account No. (11-1111-1111) / Meter No.
-            (11-1111-1111)</label>
+        <label id="sample" class="badge mt-1" style="color: #FF3939FF ;">Example : Account No. (1234567890) / Meter No.
+            (123456/1234567789)</label>
         <hr>
     </div>
     <div class="resultDiv">
+
         <?php
         $members = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = $_POST['member_data'];
-            $members = (new MembersController)->searchMember($data);
+            $members = (new MembersController)->getConsumerDetails($data);
 
             // var_dump($members);
         }
@@ -56,20 +57,20 @@ include_once __DIR__ . '/vendor/autoload.php';
                             <tr>
                                 <td>
                                     <?php 
-                                        $routeCode = $member['TownCode'].$member['RouteCode'];
-                                        $accountNo = $member['TownCode'].'-'. $routeCode.'-'.$member['AcctCode'];
-                                        $address = $member['Address'];
+                                       $account_no = $member['c_id'];
                                     ?>
                                     <a href="#" class="passData"
-                                        data-id="<?= $member['ConsumerID'] ?>"
-                                        data-name="<?= $member['Name'] ?>"
-                                        data-accountNum="<?= $accountNo ?>"
-                                        data-address="<?= $address ?>"
-                                        data-meterNumber="<?= $member['MeterSN'] ?>">
-                                        <?= $member['Name'] ?>
+                                        data-id="<?= $member['c_id'] ?>"
+                                        data-name="<?= $member['fullname'] ?>"
+                                        data-accountNum="<?= $account_no ?>"
+                                        data-address="<?= $member['complete_address'] ?>"
+                                        data-meterNumber="<?= $member['ced_meternumber'] ?>">
+                                        <?= $member['fullname'] ?>
                                     </a>
                                 </td>
-                                <td id="accountNo"><?= $member['TownCode'] ?>-<?= $member['TownCode'] ?><?= $member['RouteCode'] ?>-<?= $member['AcctCode'] ?></td>
+                                <td id="accountNo">
+                                    <?= $account_no = $member['c_id']; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -93,72 +94,71 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 
 
-
 <div id="customModal">
     <h3>Register</h3>
     <span id="close" class="float-end" onclick="closeDiv()"><i class="fa fa-close"></i></span>
     <hr>
-    <form>
-    <input type="hidden" name="id" id="id" readonly>
-    <div class="col-d-12 d-flex gap-3 mb-2">
-        <div class="mb-2">
+    <form action="views/admin/functions/save_consumerData.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" id="id" readonly>
+        <div class="col-d-12 d-flex gap-3 mb-2">
             <div class="mb-2">
-                <label class="badge text-muted">Member Name</label>
-                <input type="text" name="member_name" id="memberName" readonly>
+                <div class="mb-2">
+                    <label class="badge text-muted">Member Name</label>
+                    <input type="text" name="member_name" id="memberName" readonly>
+                </div>
+                <div class="mb-2">
+                    <label class="badge text-muted">Meter number</label>
+                    <input type="text" name="meter_number" id="meterNumber" readonly>
+                </div>
             </div>
             <div class="mb-2">
-                <label class="badge text-muted">Meter number</label>
-                <input type="text" name="member_name" id="meterNumber" readonly>
-            </div>
-        </div>
-        <div class="mb-2">
-            <div class="mb-2">
-                <label class="badge text-muted">Account number</label>
-                <input type="text" name="accountNumber" id="accountNumber" readonly>
-            </div>
-            <div class="mb-2">
-                <label class="badge text-muted">Address</label>
-                <input type="text" name="Address" id="address" readonly>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <h5>Contact Information</h5>
-    <div class="col-d-12 d-flex gap-3 mt-2">
-        
-        <div class="mb-2">
-            <div class="mb-2">
-                <label class="badge text-muted">Member Name <span id="required">*</span></label>
-                <input type="text" name="member_name" id="memberName" required>
-            </div>
-            <div class="mb-2">
-                <label class="badge text-muted">Meter number <span id="required">*</span></label>
-                <input type="text" name="member_name" id="meterNumber" required>
+                <div class="mb-2">
+                    <label class="badge text-muted">Account number</label>
+                    <input type="text" name="accountNumber" id="accountNumber" readonly>
+                </div>
+                <div class="mb-2">
+                    <label class="badge text-muted">Address</label>
+                    <input type="text" name="Address" id="address" readonly>
+                </div>
             </div>
         </div>
-        <div class="mb-2">
+        <hr>
+        <h5>Consumer Information</h5>
+        <div class="col-d-12 d-flex gap-3 mt-2">
+            
             <div class="mb-2">
-                <label class="badge text-muted">Account number <span id="required">*</span></label>
-                <input type="text" name="accountNumber" id="accountNumber" required>
+                <div class="mb-2">
+                    <label class="badge text-muted">Contact # <span id="required">*</span></label>
+                    <input type="text" name="contact_no" id="memberName" required autofocus>
+                </div>
+                <div class="mb-2">
+                    <label class="badge text-muted">Email<span id="required">*</span></label>
+                    <input type="text" name="email" id="meterNumber" required>
+                </div>
             </div>
             <div class="mb-2">
-                <label class="badge text-muted">Address <span id="required">*</span></label>
-                <input type="text" name="Address" id="address" required>
+                <div class="mb-2">
+                    <label class="badge text-muted">Date of Birth<span id="required">*</span></label>
+                    <input type="date" name="date_of_birth" id="accountNumber" required>
+                </div>
+                <!-- <div class="mb-2">
+                    <label class="badge text-muted">Address <span id="required">*</span></label>
+                    <input type="text" name="Address" id="address" required>
+                </div> -->
             </div>
         </div>
-    </div>
-    <hr>
-    <div>
-        <h5>ID Attachment <span id="required">*</span></h5>
-        <div class="mt-4 mb-4">
-            <input type="file" name="image_id" id="image_id" required>
-        </div>
+        <hr>
         <div>
-        <div id="buttonHolder" class="">
-           <button style="margin-left: 24em;margin-top: 1em;" class="btn btn-block">Submit</button> 
+            <h5>ID Attachment <span id="required">*</span></h5>
+            <div class="mt-4 mb-4">
+                <input type="file" name="image" id="image_id" required>
+            </div>
+            <div>
+            <div id="buttonHolder" class="">
+            <button style="margin-left: 24em;margin-top: 1em;" class="btn btn-block">Submit</button> 
+            </div>
         </div>
-    </div>
-    </div>
+        </div>
     
     </form>
 </div>

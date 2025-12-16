@@ -32,7 +32,7 @@
         <?php
             $attendeesSubmenu = [
                 ['title' => 'Attendees', 'url' => 'attendees.php'],
-                ['title' => 'VIP Attendees', 'url' => 'vip_attendees.php'],
+                ['title' => 'Online Registration', 'url' => 'online_registered.php'],
                 ['title' => 'Guest List', 'url' => 'guest_list.php'],
             ];
         ?>
