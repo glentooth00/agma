@@ -12,6 +12,13 @@ class MembersController
         return $members;
     }
 
+        public function getAllMembersSQL()
+    {
+        $members = (new Members)->getAllSQL();
+
+        return $members;
+    }
+
     public function countAllMembers()
     {
         $count = new Members();
@@ -26,6 +33,13 @@ class MembersController
     }
 
     public function searchMember($search)
+    {
+
+        $model = new Members();
+        return $model-> searchMember($search);
+    }
+
+    public function searchMemberSQL($search)
     {
         $model = new Members();
         return $model->hasSpecialChars($search);

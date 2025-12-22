@@ -13,6 +13,8 @@ $userid = $_SESSION['data']['id'];
 
 $getUserAreas = ( new UsersController )->getAreaListPerUser($userid);
 
+// $getUserAreas = ( new AttendeesController() )->getDBInfo();
+
 ?>
 <?php foreach ($getUserAreas as $getUserArea) : ?>
 <div class="app-container">
@@ -57,15 +59,14 @@ $getUserAreas = ( new UsersController )->getAreaListPerUser($userid);
                 </a>
                 <div class="card baby-blue cardDash" id="newMembers">
                     <?php
-                        $totalAttendees = (new AttendeesController)->getAllTheAttendees();
+                        $totalAttendees = (new AttendeesController)->getAllTheAttendees($userid);
                     ?>
                     <h4 style="color:#334443;">Attendees</h4>
                     <i class="fa fa-users" aria-hidden="true"></i>
-                     <h1 style="text-align:center;color:black;"><?= $totalAttendees ?></h1>
+                     <h1 style="text-align:center;color:black;"><?= $totalAttendees[0]['TOTAL'] ?></h1>
                 </div>
             </div>
             <hr>
-
 
             <?php if($getUserArea['area_name'] === 'SAO') : ?>
                 <h3>Sara Area Office</h3>

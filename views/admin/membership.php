@@ -6,7 +6,7 @@ $pagetitle = 'Members';
 include_once __DIR__ . '../../layouts/header.php';
 
 $currentPage = 'Membership';
-$members = (new MembersController)->getAllMembers();
+$members = (new MembersController)->getAllMembersSQL();
 $userid = $_SESSION['data']['id'];
 ?>
 
@@ -420,18 +420,18 @@ $userid = $_SESSION['data']['id'];
 
             const searchValue = $('#searchInput').val();
 
-            let first = searchValue.substring(0, 2);
-            let second = searchValue.substring(2, 6);
-            let third = searchValue.substring(6);
+            // let first = searchValue.substring(0, 2);
+            // let second = searchValue.substring(2, 6);
+            // let third = searchValue.substring(6);
 
-            const accountNumber = first + "-" + second + "-" + third;
+            // const accountNumber = first + "-" + second + "-" + third;
 
             $('#loadingOverlay').fadeIn(200);
 
             $.ajax({
                 url: 'functions/search.php',
                 method: 'POST',
-                data: { member_data: accountNumber },
+                data: { member_data: searchValue },
                 success: function (response) {
 
                     $('#searchResults').html(response);

@@ -10,7 +10,6 @@ header('Content-Type: application/json');
 // Fetch counts
 $data = [
     'totalMembers' => (new MembersController)->countAllMembers(),
-    'totalAttendees' => (new AttendeesController)->getAllTheAttendees(),
     'estancia' => (new AreaController)->getEstanciaCount(),
     'balasan' => (new AreaController)->getBalasanCount(),
     'batad' => (new AreaController)->getBatadCount(),

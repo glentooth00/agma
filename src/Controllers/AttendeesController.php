@@ -13,7 +13,18 @@ class AttendeesController{
 
     }
 
-    public function getAllTheAttendees()
+    // public function getDBInfo(){
+    //     return $this->model->getConnInfo();
+    // }
+
+    public function getAllTheAttendees($data)
+    {
+        $countAttendees = new Attendees();
+
+        return $countAttendees->getAllAttendees($data);
+    }
+
+    public function getAllTheAttendeesSQL()
     {
         $countAttendees = new Attendees();
 

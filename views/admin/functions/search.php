@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
     $controller = new MembersController();
     $results = $controller->searchMember($search);
 
-
     if ($results && count($results) > 0) {
         echo '<br><table id="searchTable" class="mt-3 table table-stripe table-bordered hover display" style="width: 100%; background-color: white;">
                 <thead class="table-dark mt-2">
@@ -17,23 +16,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['member_data'])) {
                         <th>Member Name</th>
                         <th style="text-align:center;">Account Number</th>
                         <th style="text-align:center;">Address</th>
-                        <th style="text-align:center;">Member OR</th>
+                        <th style="text-align:center;">Status</th>
                         <th style="text-align:center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>';
 
 foreach ($results as $row) {
-    $name      = htmlspecialchars($row['fullname'] ?? '');
-    $address   = htmlspecialchars($row['address'] ?? '');
-    $memberOr  = htmlspecialchars($row['member_or'] ?? '');
-    $accountNo = htmlspecialchars($row['c_id'] ?? '');
+
+    $accountNumber = $row['TownCode'] .'-'. $row['TownCode'] . $row['RouteCode'] .'-'. $row['AcctCode'];
+
+    $name      = htmlspecialchars($row['fullname'] ?? $row['Name'] ?? '');
+    $address   = htmlspecialchars($row['address'] ?? $row['Address'] ?? '');
+    $status    = htmlspecialchars($row['StatusCode'] ?? '');
+    $accountNo = htmlspecialchars($row['c_id'] ?? $accountNumber ?? '');
+
+    if($status == 'A'){
+        $status = 'Active';
+    } else {
+        $status = 'Disconnected';
+    }
 
     echo '<tr>
         <td>' . $name . '</td>
         <td style="text-align:center;">' . $accountNo . '</td>
         <td style="text-align:center;">' . $address . '</td>
-        <td style="text-align:center;">' . $memberOr . '</td>
+        <td style="text-align:center;"> <span class="badge text-dark">'. $status .'</span></td>
         <td style="text-align:center;">
             <div style="display: flex; gap: 5px; justify-content: center;">
                 <button

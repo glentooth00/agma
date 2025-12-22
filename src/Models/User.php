@@ -18,28 +18,45 @@ class User
         $this->db = Database::connect();
     }
 
-public function getByUsername($data)
-{
-    $username = $data['username'];
-    $password = $data['password'];
+    public function getByUsername($data)
+    {
+        $username = $data['username'];
+        $password = $data['password'];
 
-    // If your DB stores MD5 passwords, hash it:
-    // $password = md5($password);
+        // If your DB stores MD5 passwords, hash it:
+        // $password = md5($password);
 
-    $stmt = $this->db->prepare("
-        SELECT * FROM {$this->table}
-        WHERE username = :username AND password = :password
-        LIMIT 1
-    ");
+        $stmt = $this->db->prepare("
+            SELECT * FROM {$this->table}
+            WHERE username = :username AND password = :password
+            LIMIT 1
+        ");
 
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
+    public function getUser($data){
+
+        $username = $data['username'];
+        $password = $data['password'];
+
+        $stmt = $this->db->prepare("
+            SELECT * FROM {$this->table}
+            WHERE username = :username AND password = :password
+        ");
+
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public function updateStatus($data)
     {
@@ -147,5 +164,7 @@ public function getByUsername($data)
         return $result;
 
     }
+
+    
 
 }

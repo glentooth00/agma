@@ -8,7 +8,7 @@ use PDO;
 class Area{
     private $db;
 
-    private $table = "scannedqrdata";
+    private $table = "scannedQrdata";
 
     public function __construct()
     {

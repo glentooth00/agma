@@ -6,9 +6,19 @@ use App\Models\User;
 class UsersController
 {
 
-    public function authenticate($data)
+    public function authenticateMYSQL($data)
     {
         $user = (new User)->getByUsername([
+            'username' => $data['username'],
+            'password' => md5($data['password'])
+        ]);
+
+        return $user;
+    }
+
+        public function authenticateSQL($data)
+    {
+        $user = (new User)->getUser([
             'username' => $data['username'],
             'password' => md5($data['password'])
         ]);

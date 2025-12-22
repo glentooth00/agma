@@ -7,5 +7,7 @@
             "App\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "chillerlan/php-qrcode": "^3.0"
+    }
 }

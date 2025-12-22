@@ -7,7 +7,7 @@ session_start();
 error_reporting();
 date_default_timezone_set("Asia/Manila");
 
-$login = (new UsersController)->authenticate(
+$login = (new UsersController)->authenticateSQL(
     [
         'username' => $_POST['username'],
         'password' => $_POST['password']

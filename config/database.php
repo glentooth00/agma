@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default' => 'mysqli', // Change to 'sqlsrv' or 'mysql' for SQL Server
+    'default' => 'sqlsrv', // Change to 'sqlsrv' or 'mysql' for SQL Server
 
     'connections' => [
         'mysqli' => [

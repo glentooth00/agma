@@ -15,12 +15,43 @@ class Attendees{
         $this->db = Database::connect();
     }
 
-    public function getAllAttendees(){
-        $sql = "SELECT COUNT(*) FROM " . $this->table;
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
+    // public function getConnInfo(){
+    //     return $this->db->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+    // }   
 
-        return $stmt->fetchColumn();
+    public function getAllAttendees($userid){
+
+        $sql = "SELECT * FROM users WHERE id = :id ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':id' => $userid
+        ]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $townId = $result['area_office'];
+
+        $getTownIdsSql = "SELECT town_ids FROM areaTown WHERE id = :area_office ";
+        $stmt = $this->db->prepare($getTownIdsSql);
+        $stmt->execute([
+            ':area_office' => $townId
+        ]);
+
+        $resultTownIds = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $townIds = $resultTownIds['town_ids'];
+
+        $townIdsArray = explode(',', $townIds);
+
+        $placeholders = rtrim(str_repeat('?,', count($townIdsArray)), ',');
+
+        $sql = "SELECT COUNT(*) as TOTAL FROM ScannedQRData WHERE townCode IN ($placeholders) ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($townIdsArray);
+
+        return $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
     }
 
     public function getAllAttendeesPerArea($id){

@@ -11,7 +11,7 @@ class Members
     private $stmt;
     private $query;
 
-    private $table = "customer_details";
+    private $table = "consumer";
 
     public function __construct()
     {
@@ -49,6 +49,16 @@ class Members
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllSQL(){
+
+        $sql = "SELECT * FROM " . $this->table;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
 
 
     public function countAll()
@@ -77,12 +87,6 @@ class Members
 
     }
 
-    //search using name, Account number and Meter Number
-    public function searchMember($search)
-    {
-        var_dump($search);
-    }
-
 
 
     public function getAllAttendees(){
@@ -90,7 +94,7 @@ class Members
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll( PDO::FETCH_ASSOC);
     }
 
 
@@ -160,4 +164,54 @@ class Members
 
 
     }
+
+     public function searchMember($search)
+    {
+        $townCode =  substr($search, 0, 2);
+        $routeCode = substr($search, 2, 4);
+        $accountCode =  substr($search, 6, 8);
+
+        $account_no = $townCode . '-' . $routeCode . '-' . $accountCode;
+
+        $member_name = preg_replace( '/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $search );
+
+        try {
+            $sql = "SELECT 
+                        C.*,
+                        M.*,
+                        -- Format: 11-1121-0080
+                        (CAST(C.TownCode AS VARCHAR) + '-' +
+                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
+                        CAST(C.AcctCode AS VARCHAR)) AS AccountNumber
+                    FROM Consumer C
+                    INNER JOIN Meter M ON C.ConsumerID = M.ConsumerID
+                    WHERE 
+                        -- Match against formatted Account Number
+                        (CAST(C.TownCode AS VARCHAR) + '-' + 
+                        CAST(C.TownCode AS VARCHAR) + CAST(C.RouteCode AS VARCHAR) + '-' +
+                        CAST(C.AcctCode AS VARCHAR)) LIKE :account_number
+                        OR C.Name LIKE :name
+                        OR M.MeterSN = :meter_sn";
+
+            $stmt = $this->db->prepare($sql);
+
+            $accountNumber = $account_no;
+            $likeName =  '%' . $member_name . '%';
+            $meterNumber = $search;
+
+            $stmt->bindValue(':account_number', $accountNumber, PDO::PARAM_STR);
+            $stmt->bindValue(':name', $likeName, PDO::PARAM_STR);
+            $stmt->bindValue(':meter_sn',   $meterNumber, PDO::PARAM_STR); // exact match
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (\PDOException $e) {
+            die("Database error: " . $e->getMessage());
+        }
+    }
+
+
+    
 }
